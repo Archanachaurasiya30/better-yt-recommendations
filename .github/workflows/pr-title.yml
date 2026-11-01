@@ -1,0 +1,22 @@
+name: PR title
+
+# Pull requests are squash-merged with their title as the commit message, so titles need a commit prefix.
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions: {}
+
+jobs:
+  pr-title:
+    name: PR title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check that the title starts with a commit prefix
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if ! printf '%s' "$TITLE" | grep -Eq '^(feat|fix|docs|chore|refactor|test|ci|perf)(\([a-z0-9-]+\))?!?: .+'; then
+            echo "::error::Start the PR title with feat:, fix:, docs:, chore:, refactor:, test:, ci: or perf:, for example \"fix: keep videos visible when the model fails\"."
+            exit 1
+          fi

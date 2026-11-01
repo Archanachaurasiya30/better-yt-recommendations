@@ -1,0 +1,52 @@
+name: YouTube changed its layout
+description: The extension stopped finding the custom feed tab or the recommended videos.
+labels: ["bug", "youtube-layout"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        YouTube changes its page often. When it does, the extension can stop working until its selectors are updated.
+  - type: dropdown
+    id: symptom
+    attributes:
+      label: What stopped working?
+      options:
+        - Home no longer opens on the custom feed
+        - Videos next to the one I'm watching are never hidden
+        - The wrong videos are hidden, or hidden videos come back
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: A page where it happens
+      placeholder: https://www.youtube.com/watch?v=...
+    validations:
+      required: true
+  - type: input
+    id: youtube-language
+    attributes:
+      label: YouTube's language
+      placeholder: English
+    validations:
+      required: true
+  - type: input
+    id: since
+    attributes:
+      label: When did it start?
+      placeholder: Around March 3
+  - type: input
+    id: extension-version
+    attributes:
+      label: Extension version
+      description: Shown at chrome://extensions.
+      placeholder: "1.2.0"
+    validations:
+      required: true
+  - type: textarea
+    id: html
+    attributes:
+      label: The element's HTML
+      description: Optional, but it speeds up a fix. Right-click the tab or a recommended video, choose Inspect, then right-click the highlighted element and choose Copy → Copy outerHTML.
+      render: html

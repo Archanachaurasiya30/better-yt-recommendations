@@ -1,0 +1,62 @@
+name: Bug report
+description: Something in the extension doesn't work as described.
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: feature
+    attributes:
+      label: Which part?
+      options:
+        - Open custom feed on Home
+        - Enforcement mode
+        - Filter recommendations by topic
+        - The settings popup
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Set the topics to "programming, chess"
+        2. Open a video
+        3. ...
+  - type: input
+    id: topics
+    attributes:
+      label: Your topics
+      description: Only if the topic filter is involved.
+  - type: input
+    id: extension-version
+    attributes:
+      label: Extension version
+      description: Shown at chrome://extensions.
+      placeholder: "1.2.0"
+    validations:
+      required: true
+  - type: input
+    id: chrome-version
+    attributes:
+      label: Chrome version
+      description: Shown at chrome://version.
+    validations:
+      required: true
+  - type: input
+    id: youtube-language
+    attributes:
+      label: YouTube's language
+      placeholder: English
+  - type: textarea
+    id: console
+    attributes:
+      label: Errors in the console
+      description: Optional. On YouTube, open DevTools (F12) and copy any messages that mention Better YT Recommendations.
+      render: text

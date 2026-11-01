@@ -89,14 +89,17 @@ language.
 
 ## Setup
 
-1. Click **Code → Download ZIP** on this page and unzip the download.
+1. Download the zip from the
+   [latest release](https://github.com/r-afael/better-yt-recommendations/releases/latest)
+   and unzip it.
 2. Open `chrome://extensions` in Chrome.
 3. Turn on **Developer mode** in the top-right corner.
 4. Click **Load unpacked** and choose the unzipped folder containing `manifest.json`.
 5. Refresh YouTube. Your custom feed will open automatically.
 
-Keep the folder on your computer. After updating the files, click the extension's
-reload button at `chrome://extensions`, then refresh YouTube.
+Keep the folder on your computer. To update, replace its files with the ones from a
+newer release, click the extension's reload button at `chrome://extensions`, then
+refresh YouTube.
 
 ## Privacy
 
@@ -152,6 +155,13 @@ coverage drops below 80%. You can also run the pieces on their own:
 
 After changing the `@huggingface/transformers` version in `package.json`, run
 `pnpm install`, then `pnpm vendor` to copy the new files into `src/vendor/transformers/`.
+
+## Contributing
+
+Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) to get
+started, and report security problems privately as described in
+[SECURITY.md](SECURITY.md). Everyone taking part follows the
+[code of conduct](CODE_OF_CONDUCT.md).
 
 ## Credits
 

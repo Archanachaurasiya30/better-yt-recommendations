@@ -1,0 +1,42 @@
+name: Release
+
+# Publishes a GitHub Release with the extension's zip when a version tag like v1.2.0 is pushed.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - name: Check that the tag matches the extension's version
+        run: |
+          for file in manifest.json package.json; do
+            version=$(node -p "require('./$file').version")
+            if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+              echo "::error::Tag $GITHUB_REF_NAME doesn't match version $version in $file."
+              exit 1
+            fi
+          done
+      - name: Package the extension
+        run: zip -r -X "better-yt-recommendations-$GITHUB_REF_NAME.zip" manifest.json src _locales README.md LICENSE
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh release create "$GITHUB_REF_NAME" "better-yt-recommendations-$GITHUB_REF_NAME.zip"
+          --verify-tag --generate-notes --title "$GITHUB_REF_NAME"
