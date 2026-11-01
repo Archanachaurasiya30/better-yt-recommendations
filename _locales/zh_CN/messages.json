@@ -1,6 +1,6 @@
 {
   "extDescription": {
-    "message": "在 YouTube 首页自动打开你的自定义信息流。"
+    "message": "在 YouTube 首页打开你的自定义信息流，并隐藏正在观看的视频旁与主题无关的视频。"
   },
   "lang": {
     "message": "zh-CN"
@@ -16,5 +16,32 @@
   },
   "enforceHint": {
     "message": "即使选择首页上的其他标签，也会停留在你的自定义信息流。"
+  },
+  "topicFilter": {
+    "message": "按主题筛选推荐"
+  },
+  "topicFilterHint": {
+    "message": "隐藏正在观看的视频旁与你的主题不符的视频。使用你电脑上的 AI 模型：一次性下载 160 MB，运行时约占用 600 MB 内存。"
+  },
+  "topics": {
+    "message": "你想看的主题"
+  },
+  "topicsPlaceholder": {
+    "message": "编程，烹饪，国际象棋"
+  },
+  "topicsHint": {
+    "message": "用逗号分隔各个主题。"
+  },
+  "modelIdle": {
+    "message": "打开视频时会加载模型。"
+  },
+  "modelLoading": {
+    "message": "正在加载模型…"
+  },
+  "modelReady": {
+    "message": "模型已就绪。"
+  },
+  "modelError": {
+    "message": "无法加载模型。稍后将重试。"
   }
 }

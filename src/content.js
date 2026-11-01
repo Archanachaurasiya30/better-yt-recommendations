@@ -3,7 +3,7 @@
 (() => {
   "use strict";
 
-  const { CUSTOM_FEED_LABELS, settings } = globalThis.BetterYT;
+  const { CUSTOM_FEED_LABELS, createScheduler, settings } = globalThis.BetterYT;
 
   const HOME_PATHS = new Set(["/", "/feed/recommended"]);
   const CHIP_BAR = 'ytd-browse[page-subtype="home"] ytd-feed-filter-chip-bar-renderer';
@@ -31,8 +31,6 @@
   let clicking = false;
   let cachedTab = null;
   let observer = null;
-  let timer = null;
-  let timerAt = Infinity;
 
   const isHome = () => HOME_PATHS.has(location.pathname);
   const enforcing = () => Boolean(options?.enabled && options.enforce);
@@ -73,18 +71,8 @@
     return hidden;
   }
 
-  // Runs update() after delay, keeping whichever pending run comes first.
-  function schedule(delay) {
-    const at = performance.now() + delay;
-    if (timer !== null && timerAt <= at) return;
-    clearTimeout(timer);
-    timerAt = at;
-    timer = setTimeout(() => {
-      timer = null;
-      timerAt = Infinity;
-      update();
-    }, delay);
-  }
+  // Runs update() after a delay, keeping whichever pending run comes first.
+  const { schedule, cancel: cancelUpdate } = createScheduler(update);
 
   function watch() {
     if (observer) return;
@@ -101,9 +89,7 @@
   function stopWatching() {
     observer?.disconnect();
     observer = null;
-    clearTimeout(timer);
-    timer = null;
-    timerAt = Infinity;
+    cancelUpdate();
   }
 
   // Stops for the rest of this visit to Home.
@@ -138,24 +124,31 @@
 
     const tab = findTab();
     if (tab && isSelected(tab)) {
-      if (enforcing()) {
-        // Keep watching; the observer reports when another tab gets selected.
-        visit.clicks = 0;
-      } else if (visit.guard) {
-        // Home/logo navigation can reset this selection after navigation finishes.
-        schedule(WAIT_MS - age);
-      } else {
-        endVisit();
-      }
-      return;
+      holdSelection(age);
+    } else if (tab && isClickable(tab)) {
+      clickTab(tab, now);
+    } else {
+      waitForTab(age);
     }
+  }
 
-    if (!tab || !isClickable(tab)) {
-      cachedTab = null;
-      if (age < WAIT_MS) schedule(RECHECK_MS);
-      return;
+  // The custom feed is selected: decides whether this visit still needs to watch it.
+  function holdSelection(age) {
+    if (enforcing()) {
+      // Keep watching; the observer reports when another tab gets selected.
+      visit.clicks = 0;
+    } else if (visit.guard) {
+      // Home/logo navigation can reset this selection after navigation finishes.
+      schedule(WAIT_MS - age);
+    } else {
+      endVisit();
     }
-    clickTab(tab, now);
+  }
+
+  // The tab is missing or not clickable yet: checks again while the visit is still waiting.
+  function waitForTab(age) {
+    cachedTab = null;
+    if (age < WAIT_MS) schedule(RECHECK_MS);
   }
 
   // Clicks the tab, unless the last click is too recent or YouTube has ignored too many.
@@ -190,21 +183,30 @@
     return url.origin === location.origin && HOME_PATHS.has(url.pathname);
   }
 
+  const isPlainLeftClick = (event) =>
+    event.button === 0 && !(event.metaKey || event.ctrlKey || event.shiftKey || event.altKey);
+
   function onClick(event) {
-    if (clicking || !options?.enabled || !(event.target instanceof Element)) return;
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (clicking || !options?.enabled || !(event.target instanceof Element) || !isPlainLeftClick(event)) return;
 
     if (isHomeLink(event.target)) {
-      // Home/logo clicks also count when the URL is already the homepage.
-      homeRequested = true;
-      stopWatching();
-      visit = newVisit(true);
-      // Same-page refreshes do not always dispatch navigation events.
-      if (isHome()) schedule(0);
-      return;
+      requestHome();
+    } else if (isHome()) {
+      onChipClick(event);
     }
+  }
 
-    const chip = isHome() && event.target.closest(`${CHIP_BAR} :is(${CHIP})`);
+  // Home/logo clicks also count when the URL is already the homepage.
+  function requestHome() {
+    homeRequested = true;
+    stopWatching();
+    visit = newVisit(true);
+    // Same-page refreshes do not always dispatch navigation events.
+    if (isHome()) schedule(0);
+  }
+
+  function onChipClick(event) {
+    const chip = event.target.closest(`${CHIP_BAR} :is(${CHIP})`);
     if (!chip) return;
     const tab = findTab();
     if (tab && (chip.contains(tab) || tab.contains(chip))) return;

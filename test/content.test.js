@@ -2,9 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import FakeTimers from "@sinonjs/fake-timers";
 import { JSDOM } from "jsdom";
-import { fakeChrome, flush, loadLabels, read } from "./helpers.js";
+import { fakeChrome, flush, loadLabels, read, runScripts } from "./helpers.js";
 
-const scripts = ["src/settings.js", "src/labels.js", "src/content.js"].map((path) => read(path));
+const scripts = ["src/settings.js", "src/scheduler.js", "src/labels.js", "src/content.js"];
 const HOME_PAGE = "ytd-browse";
 
 // Structure observed on desktop YouTube. No account data is needed by the tests.
@@ -94,7 +94,7 @@ async function setup(t, { path = "/", markup = homeMarkup(), acceptClick = () =>
   });
 
   window.chrome = chrome;
-  for (const script of scripts) window.eval(script);
+  runScripts(dom.getInternalVMContext(), scripts);
   await flush();
   return { window, document, clock, state, dispatch, navigate, changeSettings };
 }
@@ -509,14 +509,17 @@ test("turning enforcement off lets other tabs be chosen again", async (t) => {
   assert.equal(clock.countTimers(), 0);
 });
 
-test("the manifest ships only local scripts, asks only for storage, and stays on desktop YouTube", () => {
+test("the manifest ships only local scripts, asks for no host access, and stays on desktop YouTube", () => {
   const manifest = JSON.parse(read("manifest.json"));
+  const [contentScripts] = manifest.content_scripts;
   assert.equal(manifest.manifest_version, 3);
-  assert.deepEqual(manifest.permissions, ["storage"]);
+  assert.deepEqual(manifest.permissions, ["storage", "offscreen"]);
   assert.equal(manifest.host_permissions, undefined);
-  assert.equal(manifest.background, undefined);
   assert.equal(manifest.content_scripts.length, 1);
-  assert.deepEqual(manifest.content_scripts[0].matches, ["https://www.youtube.com/*", "https://youtube.com/*"]);
-  assert.deepEqual(manifest.content_scripts[0].js, ["src/settings.js", "src/labels.js", "src/content.js"]);
-  for (const path of [...manifest.content_scripts[0].js, manifest.action.default_popup]) assert.ok(read(path));
+  assert.deepEqual(contentScripts.matches, ["https://www.youtube.com/*", "https://youtube.com/*"]);
+  assert.deepEqual(contentScripts.js.slice(0, scripts.length), scripts);
+  // Extension pages may run WebAssembly but no remote or inline scripts.
+  assert.equal(manifest.content_security_policy.extension_pages, "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'");
+  const files = [...contentScripts.js, ...contentScripts.css, manifest.background.service_worker, manifest.action.default_popup];
+  for (const path of files) assert.ok(read(path));
 });
