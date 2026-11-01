@@ -1,12 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "Better YT Homepage",
-  "version": "1.0.1",
-  "description": "Open YouTube Home on Your custom feed automatically.",
+  "name": "Better YT Recommendations",
+  "version": "1.1.0",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "src/popup.html"
+  },
   "content_scripts": [
     {
       "matches": ["https://www.youtube.com/*", "https://youtube.com/*"],
-      "js": ["content.js"],
+      "js": ["src/settings.js", "src/labels.js", "src/content.js"],
       "run_at": "document_idle"
     }
   ]

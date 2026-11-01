@@ -1,0 +1,20 @@
+{
+  "extDescription": {
+    "message": "在 YouTube 首頁自動開啟你的自訂動態消息。"
+  },
+  "lang": {
+    "message": "zh-TW"
+  },
+  "autoOpen": {
+    "message": "在首頁開啟自訂動態消息"
+  },
+  "autoOpenHint": {
+    "message": "每次開啟 YouTube 首頁時，自動切換到你的自訂動態消息。"
+  },
+  "enforce": {
+    "message": "強制模式"
+  },
+  "enforceHint": {
+    "message": "即使選取首頁上的其他分頁，也會停留在你的自訂動態消息。"
+  }
+}

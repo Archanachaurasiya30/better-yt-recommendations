@@ -1,0 +1,20 @@
+{
+  "extDescription": {
+    "message": "YouTube হোমে আপনার কাস্টম ফিড স্বয়ংক্রিয়ভাবে খোলে।"
+  },
+  "lang": {
+    "message": "bn"
+  },
+  "autoOpen": {
+    "message": "হোমে কাস্টম ফিড খুলুন"
+  },
+  "autoOpenHint": {
+    "message": "যখনই আপনি YouTube হোম খোলেন, আপনার কাস্টম ফিডে চলে যায়।"
+  },
+  "enforce": {
+    "message": "কঠোর মোড"
+  },
+  "enforceHint": {
+    "message": "হোমে অন্য ট্যাব বেছে নিলেও আপনি আপনার কাস্টম ফিডেই থাকবেন।"
+  }
+}

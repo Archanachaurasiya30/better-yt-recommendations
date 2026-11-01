@@ -1,0 +1,20 @@
+{
+  "extDescription": {
+    "message": "Membuka feed kustom Anda secara otomatis di Beranda YouTube."
+  },
+  "lang": {
+    "message": "id"
+  },
+  "autoOpen": {
+    "message": "Buka feed kustom di Beranda"
+  },
+  "autoOpenHint": {
+    "message": "Beralih ke feed kustom Anda setiap kali Anda membuka Beranda YouTube."
+  },
+  "enforce": {
+    "message": "Mode ketat"
+  },
+  "enforceHint": {
+    "message": "Tetap di feed kustom Anda, meskipun Anda memilih tab Beranda lainnya."
+  }
+}

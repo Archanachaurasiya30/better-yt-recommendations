@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Better YT Recommendations</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h1>Better YT Recommendations</h1>
+  <form id="settings">
+    <label class="setting">
+      <span>
+        <span class="title" id="enabled-title" data-i18n="autoOpen"></span>
+        <span class="hint" id="enabled-hint" data-i18n="autoOpenHint"></span>
+      </span>
+      <input type="checkbox" class="switch" name="enabled" aria-labelledby="enabled-title" aria-describedby="enabled-hint">
+    </label>
+    <label class="setting">
+      <span>
+        <span class="title" id="enforce-title" data-i18n="enforce"></span>
+        <span class="hint" id="enforce-hint" data-i18n="enforceHint"></span>
+      </span>
+      <input type="checkbox" class="switch" name="enforce" aria-labelledby="enforce-title" aria-describedby="enforce-hint">
+    </label>
+  </form>
+  <script src="settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

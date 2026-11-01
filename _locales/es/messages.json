@@ -1,0 +1,20 @@
+{
+  "extDescription": {
+    "message": "Abre automáticamente tu feed personalizado en la página principal de YouTube."
+  },
+  "lang": {
+    "message": "es"
+  },
+  "autoOpen": {
+    "message": "Abrir el feed personalizado en Inicio"
+  },
+  "autoOpenHint": {
+    "message": "Cambia a tu feed personalizado cada vez que abres la página principal de YouTube."
+  },
+  "enforce": {
+    "message": "Modo estricto"
+  },
+  "enforceHint": {
+    "message": "Permanece en tu feed personalizado aunque elijas otra pestaña de Inicio."
+  }
+}

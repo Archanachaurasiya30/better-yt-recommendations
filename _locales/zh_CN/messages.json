@@ -1,0 +1,20 @@
+{
+  "extDescription": {
+    "message": "在 YouTube 首页自动打开你的自定义信息流。"
+  },
+  "lang": {
+    "message": "zh-CN"
+  },
+  "autoOpen": {
+    "message": "在首页打开自定义信息流"
+  },
+  "autoOpenHint": {
+    "message": "每次打开 YouTube 首页时，自动切换到你的自定义信息流。"
+  },
+  "enforce": {
+    "message": "强制模式"
+  },
+  "enforceHint": {
+    "message": "即使选择首页上的其他标签，也会停留在你的自定义信息流。"
+  }
+}

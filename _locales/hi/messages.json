@@ -1,0 +1,20 @@
+{
+  "extDescription": {
+    "message": "YouTube होम पर आपकी कस्टम फ़ीड अपने-आप खोलता है।"
+  },
+  "lang": {
+    "message": "hi"
+  },
+  "autoOpen": {
+    "message": "होम पर कस्टम फ़ीड खोलें"
+  },
+  "autoOpenHint": {
+    "message": "जब भी आप YouTube होम खोलते हैं, आपकी कस्टम फ़ीड पर स्विच करता है।"
+  },
+  "enforce": {
+    "message": "सख़्त मोड"
+  },
+  "enforceHint": {
+    "message": "होम पर कोई दूसरा टैब चुनने पर भी आप अपनी कस्टम फ़ीड पर ही रहेंगे।"
+  }
+}

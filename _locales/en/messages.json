@@ -1,0 +1,26 @@
+{
+  "extDescription": {
+    "message": "Open YouTube Home on your custom feed automatically.",
+    "description": "Extension description shown in the Chrome Web Store and on chrome://extensions."
+  },
+  "lang": {
+    "message": "en",
+    "description": "BCP 47 code of this translation, used as the popup's lang attribute."
+  },
+  "autoOpen": {
+    "message": "Open custom feed on Home",
+    "description": "Popup toggle that opens the custom feed tab when YouTube Home opens."
+  },
+  "autoOpenHint": {
+    "message": "Switches to your custom feed whenever you open YouTube Home.",
+    "description": "Explains the autoOpen toggle."
+  },
+  "enforce": {
+    "message": "Enforcement mode",
+    "description": "Popup toggle name for enforcement mode."
+  },
+  "enforceHint": {
+    "message": "Stay on your custom feed, even if you pick another Home tab.",
+    "description": "Explains enforcement mode: other Home tabs can't take over from the custom feed."
+  }
+}
