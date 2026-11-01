@@ -1,6 +1,6 @@
 {
   "extDescription": {
-    "message": "Membuka feed kustom Anda secara otomatis di Beranda YouTube."
+    "message": "Membuka feed kustom Anda di Beranda YouTube dan menyembunyikan video yang tidak sesuai topik di samping video yang Anda tonton."
   },
   "lang": {
     "message": "id"
@@ -16,5 +16,32 @@
   },
   "enforceHint": {
     "message": "Tetap di feed kustom Anda, meskipun Anda memilih tab Beranda lainnya."
+  },
+  "topicFilter": {
+    "message": "Filter rekomendasi berdasarkan topik"
+  },
+  "topicFilterHint": {
+    "message": "Menyembunyikan video di samping video yang Anda tonton yang tidak cocok dengan topik Anda. Menggunakan model AI di komputer Anda: unduhan satu kali sebesar 160 MB dan sekitar 600 MB memori saat berjalan."
+  },
+  "topics": {
+    "message": "Topik yang ingin Anda lihat"
+  },
+  "topicsPlaceholder": {
+    "message": "pemrograman, memasak, catur"
+  },
+  "topicsHint": {
+    "message": "Pisahkan topik dengan koma."
+  },
+  "modelIdle": {
+    "message": "Model dimuat saat Anda membuka video."
+  },
+  "modelLoading": {
+    "message": "Memuat model…"
+  },
+  "modelReady": {
+    "message": "Model siap."
+  },
+  "modelError": {
+    "message": "Tidak dapat memuat model. Akan dicoba lagi sebentar lagi."
   }
 }

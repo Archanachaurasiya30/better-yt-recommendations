@@ -22,8 +22,24 @@
       </span>
       <input type="checkbox" class="switch" name="enforce" aria-labelledby="enforce-title" aria-describedby="enforce-hint">
     </label>
+    <label class="setting">
+      <span>
+        <span class="title" id="topicFilter-title" data-i18n="topicFilter"></span>
+        <span class="hint" id="topicFilter-hint" data-i18n="topicFilterHint"></span>
+      </span>
+      <input type="checkbox" class="switch" name="topicFilter" aria-labelledby="topicFilter-title" aria-describedby="topicFilter-hint">
+    </label>
+    <div class="field">
+      <label class="title" for="topics" data-i18n="topics"></label>
+      <textarea id="topics" name="topics" rows="3" maxlength="500" data-i18n-placeholder="topicsPlaceholder" aria-describedby="topics-hint"></textarea>
+      <span class="hint" id="topics-hint" data-i18n="topicsHint"></span>
+      <p class="status" id="model-status" role="status" aria-live="polite" hidden></p>
+      <progress id="model-progress" max="100" aria-labelledby="model-status" hidden></progress>
+    </div>
   </form>
   <script src="settings.js"></script>
+  <script src="protocol.js"></script>
+  <script src="topics.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

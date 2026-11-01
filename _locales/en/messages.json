@@ -1,6 +1,6 @@
 {
   "extDescription": {
-    "message": "Open YouTube Home on your custom feed automatically.",
+    "message": "Open YouTube Home on your custom feed and hide off-topic videos next to the one you're watching.",
     "description": "Extension description shown in the Chrome Web Store and on chrome://extensions."
   },
   "lang": {
@@ -22,5 +22,41 @@
   "enforceHint": {
     "message": "Stay on your custom feed, even if you pick another Home tab.",
     "description": "Explains enforcement mode: other Home tabs can't take over from the custom feed."
+  },
+  "topicFilter": {
+    "message": "Filter recommendations by topic",
+    "description": "Popup toggle that hides recommended videos that don't match the user's topics."
+  },
+  "topicFilterHint": {
+    "message": "Hides videos next to the one you're watching that don't match your topics. Uses an AI model on your computer: a one-time 160 MB download and about 600 MB of memory while it runs.",
+    "description": "Explains the topicFilter toggle and what the local AI model costs."
+  },
+  "topics": {
+    "message": "Topics you want to see",
+    "description": "Label of the text field where the user types the topics to keep."
+  },
+  "topicsPlaceholder": {
+    "message": "programming, cooking, chess",
+    "description": "Example topics shown in the empty topics field. Use topics that make sense in this language, separated by commas."
+  },
+  "topicsHint": {
+    "message": "Separate topics with commas.",
+    "description": "Explains how to type several topics."
+  },
+  "modelIdle": {
+    "message": "The model loads when you open a video.",
+    "description": "Status of the topic model before it has loaded."
+  },
+  "modelLoading": {
+    "message": "Loading the model…",
+    "description": "Status of the topic model while it downloads or loads. A progress bar shows how far it got."
+  },
+  "modelReady": {
+    "message": "The model is ready.",
+    "description": "Status of the topic model once it can filter videos."
+  },
+  "modelError": {
+    "message": "Couldn't load the model. It will try again shortly.",
+    "description": "Status of the topic model after it failed to load."
   }
 }

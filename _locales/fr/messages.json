@@ -1,6 +1,6 @@
 {
   "extDescription": {
-    "message": "Ouvre automatiquement votre flux personnalisé sur l'accueil YouTube."
+    "message": "Ouvre votre flux personnalisé sur l'accueil YouTube et masque les vidéos hors sujet à côté de celle que vous regardez."
   },
   "lang": {
     "message": "fr"
@@ -16,5 +16,32 @@
   },
   "enforceHint": {
     "message": "Restez sur votre flux personnalisé, même si vous choisissez un autre onglet de l'accueil."
+  },
+  "topicFilter": {
+    "message": "Filtrer les recommandations par sujet"
+  },
+  "topicFilterHint": {
+    "message": "Masque les vidéos à côté de celle que vous regardez qui ne correspondent pas à vos sujets. Utilise un modèle d'IA sur votre ordinateur : un téléchargement unique de 160 Mo et environ 600 Mo de mémoire pendant son fonctionnement."
+  },
+  "topics": {
+    "message": "Sujets que vous voulez voir"
+  },
+  "topicsPlaceholder": {
+    "message": "programmation, cuisine, échecs"
+  },
+  "topicsHint": {
+    "message": "Séparez les sujets par des virgules."
+  },
+  "modelIdle": {
+    "message": "Le modèle se charge quand vous ouvrez une vidéo."
+  },
+  "modelLoading": {
+    "message": "Chargement du modèle…"
+  },
+  "modelReady": {
+    "message": "Le modèle est prêt."
+  },
+  "modelError": {
+    "message": "Impossible de charger le modèle. Nouvel essai sous peu."
   }
 }

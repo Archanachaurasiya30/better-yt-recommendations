@@ -5,6 +5,8 @@
   const DEFAULTS = Object.freeze({
     enabled: true, // Open Your custom feed when Home opens.
     enforce: false, // Keep Your custom feed selected while on Home.
+    topicFilter: true, // Hide recommendations that don't match the topics. Does nothing until topics are set.
+    topics: "", // Topics the user wants to see, as typed in the popup.
   });
 
   async function load() {

@@ -1,6 +1,6 @@
 {
   "extDescription": {
-    "message": "Abre automáticamente tu feed personalizado en la página principal de YouTube."
+    "message": "Abre tu feed personalizado en la página principal de YouTube y oculta los videos fuera de tema junto al que estás viendo."
   },
   "lang": {
     "message": "es"
@@ -16,5 +16,32 @@
   },
   "enforceHint": {
     "message": "Permanece en tu feed personalizado aunque elijas otra pestaña de Inicio."
+  },
+  "topicFilter": {
+    "message": "Filtrar recomendaciones por tema"
+  },
+  "topicFilterHint": {
+    "message": "Oculta los videos junto al que estás viendo que no coinciden con tus temas. Usa un modelo de IA en tu equipo: una descarga única de 160 MB y unos 600 MB de memoria mientras funciona."
+  },
+  "topics": {
+    "message": "Temas que quieres ver"
+  },
+  "topicsPlaceholder": {
+    "message": "programación, cocina, ajedrez"
+  },
+  "topicsHint": {
+    "message": "Separa los temas con comas."
+  },
+  "modelIdle": {
+    "message": "El modelo se carga cuando abres un video."
+  },
+  "modelLoading": {
+    "message": "Cargando el modelo…"
+  },
+  "modelReady": {
+    "message": "El modelo está listo."
+  },
+  "modelError": {
+    "message": "No se pudo cargar el modelo. Se volverá a intentar en breve."
   }
 }
