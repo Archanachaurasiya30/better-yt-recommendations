@@ -3,9 +3,8 @@ import test from "node:test";
 import vm from "node:vm";
 import FakeTimers from "@sinonjs/fake-timers";
 import { JSDOM } from "jsdom";
-import { fakeChrome, flush, read, runScripts } from "./helpers.js";
+import { MATCH, PRELOAD, fakeChrome, flush, read, runScripts, score } from "./helpers.js";
 
-const MATCH = "better-yt:match";
 const IDLE_MS = 1_000;
 const LOADING = (progress) => ({ state: "loading", progress });
 const READY = { state: "ready" };
@@ -13,8 +12,8 @@ const ERROR = { state: "error" };
 
 // Values from the scripts' realm are copied so deep comparisons only look at their contents.
 const plain = (value) => JSON.parse(JSON.stringify(value));
-const request = (topics = ["chess"], videos = [{ id: "a", title: "chess", channel: "" }]) =>
-  ({ type: MATCH, topics, videos });
+const CHESS = { id: "a", title: "chess", channel: "" };
+const request = (topics = ["chess"], avoidTopics = [], videos = [CHESS]) => ({ type: MATCH, topics, avoidTopics, videos });
 
 function createContext(globals = {}) {
   const clock = FakeTimers.createClock();
@@ -62,8 +61,8 @@ test("loads the model once for concurrent requests and answers each of them", as
   const second = handle(request(["cooking"]));
   await finishLoading();
 
-  assert.deepEqual(await first, { scores: { a: 1 } });
-  assert.deepEqual(await second, { scores: { a: 0 } });
+  assert.deepEqual(await first, { scores: { a: score(1) } });
+  assert.deepEqual(await second, { scores: { a: score(0) } });
   assert.equal(state.loads, 1);
   assert.deepEqual(state.statuses, [LOADING(0), READY]);
 });
@@ -86,9 +85,27 @@ test("reports a failed load and tries again on the next request", async () => {
 
   const retried = handle(request());
   await finishLoading();
-  assert.deepEqual(await retried, { scores: { a: 1 } });
+  assert.deepEqual(await retried, { scores: { a: score(1) } });
   assert.equal(state.loads, 2);
   assert.deepEqual(state.statuses, [LOADING(0), ERROR, LOADING(0), READY]);
+});
+
+test("answers each video's closest wanted and avoided similarity", async () => {
+  const { handle, finishLoading } = setup();
+  const gaming = { id: "b", title: "gaming", channel: "" };
+  const answer = handle(request(["chess", "cooking"], ["gaming"], [CHESS, gaming]));
+  await finishLoading();
+
+  assert.deepEqual(await answer, { scores: { a: score(1, 0), b: score(0, 1) } });
+});
+
+test("scores only the lists that have topics", async () => {
+  const { handle, finishLoading } = setup();
+  const onlyAvoided = handle(request([], ["chess"]));
+  await finishLoading();
+
+  assert.deepEqual(await onlyAvoided, { scores: { a: score(null, 1) } });
+  assert.deepEqual(await handle(request(["chess"], [])), { scores: { a: score(1, null) } });
 });
 
 test("answers with an error when matching fails", async () => {
@@ -106,15 +123,16 @@ test("answers with an error when matching fails", async () => {
 
 test("rejects malformed requests without loading the model", async () => {
   const { state, handle } = setup();
-  const video = { id: "a", title: "chess", channel: "" };
   const malformed = [
     null,
     { ...request(), type: "better-yt:other" },
     { ...request(), topics: "chess" },
     { ...request(), topics: ["chess", 1] },
+    { ...request(), avoidTopics: undefined },
+    { ...request(), avoidTopics: ["gaming", 1] },
     { ...request(), videos: undefined },
     { ...request(), videos: [null] },
-    { ...request(), videos: [{ ...video, channel: undefined }] },
+    { ...request(), videos: [{ ...CHESS, channel: undefined }] },
   ];
 
   for (const message of malformed) {
@@ -165,6 +183,47 @@ test("never says it is idle while a request is still running", async () => {
   assert.equal(state.idles, 1);
 });
 
+test("a preload answers at once and loads the model in the background", async () => {
+  const { state, handle } = setup();
+
+  assert.deepEqual(await handle({ type: PRELOAD }), { ok: true });
+  assert.equal(state.loads, 1);
+  assert.deepEqual(state.statuses, [LOADING(0)]);
+});
+
+test("a match after a preload shares its load", async () => {
+  const { state, handle, finishLoading } = setup();
+  await handle({ type: PRELOAD });
+  const answer = handle(request());
+  await finishLoading();
+
+  assert.deepEqual(await answer, { scores: { a: score(1) } });
+  assert.equal(state.loads, 1);
+});
+
+test("a preloaded model that is never used goes idle only after the load finishes", async () => {
+  const { clock, state, handle, finishLoading } = setup();
+  await handle({ type: PRELOAD });
+  clock.tick(IDLE_MS * 10);
+  assert.equal(state.idles, 0);
+
+  await finishLoading();
+  clock.tick(IDLE_MS);
+  assert.equal(state.idles, 1);
+});
+
+test("a preload that fails still goes idle, and the next one tries again", async () => {
+  const { clock, state, handle, failLoading } = setup();
+  await handle({ type: PRELOAD });
+  await failLoading(new Error("offline"));
+  assert.deepEqual(state.statuses, [LOADING(0), ERROR]);
+
+  clock.tick(IDLE_MS);
+  assert.equal(state.idles, 1);
+  await handle({ type: PRELOAD });
+  assert.equal(state.loads, 2);
+});
+
 // Runs the offscreen document's scripts with a model that embeds every text as the same vector.
 function setupDocument() {
   const chrome = fakeChrome();
@@ -195,7 +254,7 @@ test("answers only the messages addressed to the offscreen document", async () =
   assert.equal(ignored.handled, false);
   assert.deepEqual(ignored.responses, []);
   assert.equal(answered.handled, true);
-  assert.deepEqual(answered.responses, [{ scores: { a: 1 } }]);
+  assert.deepEqual(answered.responses, [{ scores: { a: score(1) } }]);
   assert.deepEqual(sent, [
     { type: "better-yt:status", status: LOADING(0) },
     { type: "better-yt:status", status: READY },

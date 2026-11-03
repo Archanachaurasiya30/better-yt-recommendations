@@ -1,0 +1,122 @@
+/* The options page looks like the popup, in one wider column. */
+@import "popup.css";
+
+body {
+  width: auto;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 16px 32px;
+}
+
+h1 {
+  padding: 24px 0 16px;
+  font-size: 20px;
+}
+
+h2 {
+  margin: 0;
+  padding: 12px 16px 4px;
+  font-size: 15px;
+}
+
+section {
+  margin-bottom: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+footer {
+  padding-inline: 0;
+  border-top: 0;
+}
+
+/* The topics to avoid and their slider are set apart from the wanted topics' slider above. */
+.list-start {
+  margin-top: 12px;
+}
+
+/* The try box sits between the sliders and the model status, set apart from both. */
+.try {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-block: 6px;
+}
+
+#try-result {
+  min-height: 1.4em;
+  margin: 0;
+}
+
+/* The verdict, then the scores or a note, each on its own line. */
+#try-result > span {
+  display: block;
+}
+
+.verdict {
+  font-weight: 600;
+}
+
+/* Text for screen readers only, which the page already shows in other words. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The profile buttons share one row, and wrap in languages with longer words. */
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* A hint for a whole section, after its rows. */
+section > .hint {
+  margin: 0;
+  padding: 0 16px 12px;
+}
+
+/* Lines under a section's fields: a shared hint, or why a change wasn't saved. */
+.field > p {
+  margin: 0;
+}
+
+.error {
+  color: var(--accent);
+}
+
+/* Each keyboard shortcut's description, with its keys at the end of the row. */
+.shortcuts {
+  margin: 0;
+  padding: 4px 16px 8px;
+  list-style: none;
+}
+
+.shortcuts li {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: 4px;
+}
+
+/* Key combinations read left to right in every language, so Mac symbols such as ⌃⇧F keep their order. */
+.shortcuts kbd {
+  direction: ltr;
+  unicode-bidi: isolate;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--field);
+  font: 12px/1.4 ui-monospace, monospace;
+  white-space: nowrap;
+}
+
+/* A button for a whole section, after its rows. */
+section > .secondary {
+  margin: 0 16px 12px;
+}

@@ -1,6 +1,6 @@
 {
   "extDescription": {
-    "message": "在 YouTube 首页打开你的自定义信息流，并隐藏正在观看的视频旁与主题无关的视频。"
+    "message": "在 YouTube 首页打开你的自定义信息流，并隐藏与你的主题不符的推荐。"
   },
   "lang": {
     "message": "zh-CN"
@@ -24,10 +24,13 @@
     "message": "从信息流、搜索结果和侧边栏中移除 Shorts，并以普通视频的形式打开 Shorts 链接。"
   },
   "topicFilter": {
-    "message": "按主题筛选推荐"
+    "message": "筛选推荐"
   },
   "topicFilterHint": {
-    "message": "隐藏正在观看的视频旁与你的主题不符的视频。使用你电脑上的 AI 模型。"
+    "message": "在“所有设置”的“筛选范围”中勾选的页面上，隐藏与你的主题不符、符合你想避开的主题，或来自你始终隐藏的频道的视频。使用你电脑上的 AI 模型。"
+  },
+  "topicFilterHintHere": {
+    "message": "在下方“筛选范围”中勾选的页面上，隐藏与你的主题不符、符合你想避开的主题，或来自你始终隐藏的频道的视频。使用你电脑上的 AI 模型。"
   },
   "topics": {
     "message": "你想看的主题"
@@ -38,14 +41,17 @@
   "topicsHint": {
     "message": "用逗号分隔各个主题。"
   },
-  "sensitivity": {
-    "message": "过滤灵敏度"
+  "threshold": {
+    "message": "显示所需匹配度"
   },
-  "sensitivityHint": {
-    "message": "越高隐藏的视频越多，越低保留的越多。"
+  "thresholdHint": {
+    "message": "视频至少要与你的某个主题匹配到这个程度才会保留。越高隐藏越多。"
+  },
+  "thresholdHintEmpty": {
+    "message": "添加想看的主题之前，此项不起作用。"
   },
   "modelIdle": {
-    "message": "打开视频时会加载模型。"
+    "message": "页面需要时会加载模型，你也可以点击“立即加载”。"
   },
   "modelLoading": {
     "message": "正在加载模型…"
@@ -58,5 +64,333 @@
   },
   "sourceCode": {
     "message": "GitHub 上的源代码"
+  },
+  "allSettings": {
+    "message": "所有设置"
+  },
+  "homeSection": {
+    "message": "首页和 Shorts"
+  },
+  "topicsSection": {
+    "message": "主题"
+  },
+  "summaryTopics": {
+    "message": "主题：$TOPICS$",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "chess, cooking"
+      }
+    }
+  },
+  "noTopicsYet": {
+    "message": "还没有主题。请在“所有设置”中添加。"
+  },
+  "avoidTopics": {
+    "message": "你想避开的主题"
+  },
+  "avoidTopicsPlaceholder": {
+    "message": "游戏，明星八卦"
+  },
+  "avoidTopicsHint": {
+    "message": "与其中某个主题的匹配度高于你想看的主题的视频会被隐藏。用逗号分隔各个主题。"
+  },
+  "avoidThreshold": {
+    "message": "触发隐藏的匹配度"
+  },
+  "avoidThresholdHint": {
+    "message": "只有当视频与某个要避开的主题匹配达到这个程度或更高，且高于与你的主题的匹配度时，才会因此被隐藏。越低隐藏越多。"
+  },
+  "avoidThresholdHintEmpty": {
+    "message": "添加要避开的主题之前，此项不起作用。"
+  },
+  "summaryAvoiding": {
+    "message": "避开：$TOPICS$",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "gaming, gossip"
+      }
+    }
+  },
+  "loadNow": {
+    "message": "立即加载"
+  },
+  "tryTitle": {
+    "message": "试试标题"
+  },
+  "tryTitlePlaceholder": {
+    "message": "如何击败西西里防御"
+  },
+  "tryTitleHint": {
+    "message": "输入一个视频标题，看看按上面的设置，过滤器会显示还是隐藏它。"
+  },
+  "tryScores": {
+    "message": "你的主题匹配度：$WANT$ · 要避开的主题匹配度：$AVOID$",
+    "placeholders": {
+      "want": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "avoid": {
+        "content": "$2",
+        "example": "none"
+      }
+    }
+  },
+  "tryScoreNone": {
+    "message": "无"
+  },
+  "tryShown": {
+    "message": "会显示"
+  },
+  "tryHidden": {
+    "message": "会隐藏"
+  },
+  "tryAvoided": {
+    "message": "会隐藏：与要避开的主题匹配度为 $SCORE$，达到了触发隐藏的 $LINE$。",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryAvoidedMore": {
+    "message": "会隐藏：与要避开的主题匹配度为 $AVOID$，高于与你的主题的匹配度 $WANT$。",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryAvoidedNotMore": {
+    "message": "会显示：与要避开的主题匹配度为 $AVOID$，但不高于与你的主题的匹配度 $WANT$。",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryOffTopic": {
+    "message": "会隐藏：与你的主题匹配度仅为 $SCORE$，低于所需的 $LINE$。",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryOnTopic": {
+    "message": "会显示：与你的主题匹配度为 $SCORE$，达到了所需的 $LINE$。",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNotAvoided": {
+    "message": "会显示：与要避开的主题匹配度仅为 $SCORE$，低于触发隐藏的 $LINE$。",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNeedsTopics": {
+    "message": "请先在上面添加一个主题，再试标题。"
+  },
+  "tryError": {
+    "message": "无法检查该标题。请稍后重试。"
+  },
+  "hiddenRowOne": {
+    "message": "已隐藏 1 个视频"
+  },
+  "hiddenRowMany": {
+    "message": "已隐藏 $COUNT$ 个视频",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "showHidden": {
+    "message": "显示"
+  },
+  "hideHidden": {
+    "message": "重新隐藏"
+  },
+  "filterPages": {
+    "message": "筛选范围"
+  },
+  "filterPagesHint": {
+    "message": "每个经过筛选的列表顶部都有一行，显示隐藏了多少个视频，并可将其显示出来。"
+  },
+  "filterWatch": {
+    "message": "正在观看的视频旁"
+  },
+  "filterHome": {
+    "message": "首页"
+  },
+  "filterSubscriptions": {
+    "message": "订阅内容"
+  },
+  "filterSearch": {
+    "message": "搜索结果"
+  },
+  "channels": {
+    "message": "频道"
+  },
+  "allowedChannels": {
+    "message": "从不隐藏这些频道"
+  },
+  "allowedChannelsHint": {
+    "message": "这些频道的视频始终显示，无论主题是什么。"
+  },
+  "blockedChannels": {
+    "message": "始终隐藏这些频道"
+  },
+  "blockedChannelsHint": {
+    "message": "在“筛选范围”中勾选的每个页面上，都会隐藏这些频道的视频。"
+  },
+  "channelsHint": {
+    "message": "每行一个频道，按 YouTube 上显示的名称填写。"
+  },
+  "listFull": {
+    "message": "每个列表最多 50 个频道，只会保存前 50 个。"
+  },
+  "saveFailed": {
+    "message": "无法保存你的更改。请过一分钟再试。"
+  },
+  "menuAllowChannel": {
+    "message": "从不隐藏此频道"
+  },
+  "menuBlockChannel": {
+    "message": "始终隐藏此频道"
+  },
+  "channelAllowed": {
+    "message": "$CHANNEL$ 将永远不会被隐藏。",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "channelBlocked": {
+    "message": "$CHANNEL$ 将始终被隐藏。",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "noChannelPicked": {
+    "message": "右键点击视频的缩略图或标题，即可选择其频道。"
+  },
+  "channelListFull": {
+    "message": "该列表已满。请先在“所有设置”中移除一个频道。"
+  },
+  "channelSavedNotFiltered": {
+    "message": "此设置在“筛选推荐”已开启、且该页面已在“筛选范围”中勾选时生效。"
+  },
+  "channelsMenuHint": {
+    "message": "你也可以在 YouTube 上右键点击视频的缩略图或标题，添加其频道。"
+  },
+  "commandToggleFilter": {
+    "message": "开启或关闭“筛选推荐”"
+  },
+  "commandToggleShorts": {
+    "message": "开启或关闭“隐藏 Shorts”"
+  },
+  "topicFilterOn": {
+    "message": "“筛选推荐”已开启"
+  },
+  "topicFilterOff": {
+    "message": "“筛选推荐”已关闭"
+  },
+  "hideShortsOn": {
+    "message": "“隐藏 Shorts”已开启"
+  },
+  "hideShortsOff": {
+    "message": "“隐藏 Shorts”已关闭"
+  },
+  "shortcuts": {
+    "message": "键盘快捷键"
+  },
+  "shortcutsHint": {
+    "message": "如果其他扩展程序已在使用某个快捷键，Chrome 会将其保留为未设置。"
+  },
+  "shortcutUnset": {
+    "message": "未设置"
+  },
+  "changeShortcuts": {
+    "message": "更改快捷键"
+  },
+  "profilesSection": {
+    "message": "方案"
+  },
+  "profile": {
+    "message": "方案"
+  },
+  "noProfile": {
+    "message": "不使用方案"
+  },
+  "profileName": {
+    "message": "方案名称"
+  },
+  "profileNamePlaceholder": {
+    "message": "工作"
+  },
+  "saveProfile": {
+    "message": "另存为新方案"
+  },
+  "renameProfile": {
+    "message": "重命名"
+  },
+  "deleteProfile": {
+    "message": "删除"
+  },
+  "profilesHint": {
+    "message": "方案会以一个名称保存上方的主题和两个滑块（“显示所需匹配度”和“触发隐藏的匹配度”）。你可以在这里或通过工具栏中的扩展程序弹出式窗口切换方案。从“不使用方案”切换到某个方案会替换主题和滑块，因此请先将它们另存为方案以便保留。"
+  },
+  "profileNameTaken": {
+    "message": "已有同名方案。"
+  },
+  "profilesFull": {
+    "message": "没有空间再添加方案了。请删除一个方案，或缩短其他方案的主题。"
+  },
+  "profileChangeTooLarge": {
+    "message": "此更改已生效，但方案中放不下，方案仍保留原来的设置。请缩短主题，或删除另一个方案。"
   }
 }

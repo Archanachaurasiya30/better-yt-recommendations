@@ -1,56 +1,37 @@
 import assert from "node:assert/strict";
-import { readdirSync } from "node:fs";
 import test from "node:test";
-import FakeTimers from "@sinonjs/fake-timers";
 import { JSDOM } from "jsdom";
-import { fakeChrome, flush, read, readJson, runScripts } from "./helpers.js";
+import {
+  EVENING,
+  PRELOAD,
+  STATUS_KEY,
+  WORK,
+  flush,
+  locales,
+  openPage,
+  optionTexts,
+  pickOption,
+  read,
+  readJson,
+  recordMessages,
+  untranslated,
+} from "./helpers.js";
 
-const html = read("src/popup.html");
-const scripts = ["src/settings.js", "src/protocol.js", "src/topics.js", "src/popup.js"];
-const STATUS_KEY = "modelStatus";
-const SAVE_DELAY_MS = 400;
-const localeDirectory = new URL("../_locales/", import.meta.url);
-const locales = readdirSync(localeDirectory);
 const alphabetically = (a, b) => a.localeCompare(b);
 
+// The $NAME$ tokens a message uses and the placeholders it defines, so a translation fills the same values.
+const placeholderNames = ({ message, placeholders = {} }) => ({
+  used: [...message.matchAll(/\$(\w+)\$/g)].map(([, name]) => name.toLowerCase()).toSorted(alphabetically),
+  defined: Object.entries(placeholders).map(([name, { content }]) => `${name}=${content}`).toSorted(alphabetically),
+});
+
 async function setup(t, options) {
-  const dom = new JSDOM(html, { runScripts: "outside-only" });
-  const { window } = dom;
-  const clock = FakeTimers.withGlobal(window).install({ toFake: ["setTimeout", "clearTimeout"] });
-  const chrome = fakeChrome(options);
-  window.chrome = chrome;
-  runScripts(dom.getInternalVMContext(), scripts);
-  await flush();
-  t.after(() => {
-    clock.uninstall();
-    window.close();
-  });
-
-  const { document } = window;
+  const page = await openPage(t, "src/popup.html", options);
+  const { document } = page;
   const toggle = (name) => document.querySelector(`input[name="${name}"]`);
-  const field = document.querySelector('textarea[name="topics"]');
   const status = document.querySelector("#model-status");
-  const progressBar = document.querySelector("#model-progress");
-  const type = (text) => {
-    field.value = text;
-    field.dispatchEvent(new window.Event("input", { bubbles: true }));
-  };
-  const commit = () => field.dispatchEvent(new window.Event("change", { bubbles: true }));
-  const slider = document.querySelector('input[name="threshold"]');
-  const sliderValue = document.querySelector("#threshold-value");
-  // Moves the slider the way a drag or an arrow key does: input, then change.
-  const slide = (value) => {
-    slider.value = String(value);
-    slider.dispatchEvent(new window.Event("input", { bubbles: true }));
-    slider.dispatchEvent(new window.Event("change", { bubbles: true }));
-  };
-  return { window, document, chrome, clock, toggle, field, status, progressBar, type, commit, slider, sliderValue, slide };
-}
-
-// What the background stores while the model loads, as chrome.storage.session reports it.
-async function reportStatus(chrome, status) {
-  await chrome.storage.session.set({ [STATUS_KEY]: status });
-  await flush();
+  const summary = document.querySelector("#summary");
+  return { ...page, toggle, status, summary };
 }
 
 test("shows the stored settings", async (t) => {
@@ -99,165 +80,165 @@ test("Hide Shorts starts off and saves as it changes", async (t) => {
   assert.equal(chrome.data.hideShorts, true);
 });
 
-test("shows the stored topics", async (t) => {
-  const { field } = await setup(t, { stored: { topics: "chess, cooking" } });
-  assert.equal(field.value, "chess, cooking");
-});
-
-test("saves the topics once typing pauses", async (t) => {
-  const { chrome, clock, type } = await setup(t);
-  type("chess");
-  type("chess, cooking");
-  clock.tick(SAVE_DELAY_MS - 1);
-  assert.equal(chrome.data.topics, undefined);
-  clock.tick(1);
-  assert.equal(chrome.data.topics, "chess, cooking");
-});
-
-test("saves the topics right away when the field changes", async (t) => {
-  const { chrome, clock, type, commit } = await setup(t);
-  type("chess");
-  commit();
-  assert.equal(chrome.data.topics, "chess");
-  chrome.data.topics = "saved elsewhere";
-  clock.tick(SAVE_DELAY_MS);
-  assert.equal(chrome.data.topics, "saved elsewhere", "the pending save was cancelled");
-});
-
-// Chrome fires blur when the popup closes by a click outside it, and pagehide otherwise.
-for (const event of ["pagehide", "blur"]) {
-  test(`saves unsaved typing on ${event}`, async (t) => {
-    const { window, chrome, type } = await setup(t);
-    type("chess");
-    window.dispatchEvent(new window.Event(event));
-    assert.equal(chrome.data.topics, "chess");
-  });
-}
-
-test("closing the popup without typing saves nothing", async (t) => {
-  const { window, chrome } = await setup(t);
-  window.dispatchEvent(new window.Event("pagehide"));
-  assert.equal(chrome.data.topics, undefined);
-});
-
-test("topics can only be edited while the topic filter is on", async (t) => {
-  const { field, toggle } = await setup(t, { stored: { topicFilter: false } });
-  assert.equal(field.disabled, true);
-  toggle("topicFilter").click();
-  assert.equal(field.disabled, false);
-  toggle("topicFilter").click();
-  assert.equal(field.disabled, true);
-});
-
-test("shows the stored sensitivity, or 0.25 by default", async (t) => {
-  const { slider, sliderValue } = await setup(t);
-  assert.equal(slider.valueAsNumber, 0.25);
-  assert.equal(sliderValue.value, "0.25");
-
-  const stored = await setup(t, { stored: { threshold: 0.3 } });
-  assert.equal(stored.slider.valueAsNumber, 0.3);
-  assert.equal(stored.sliderValue.value, "0.30");
-});
-
-test("saves the sensitivity as a number once the slider pauses, showing each value as it moves", async (t) => {
-  const { chrome, clock, slide, sliderValue } = await setup(t);
-  slide(0.31);
-  assert.equal(sliderValue.value, "0.31");
-  slide(0.32);
-  clock.tick(SAVE_DELAY_MS - 1);
-  assert.equal(chrome.data.threshold, undefined);
-  clock.tick(1);
-  assert.equal(chrome.data.threshold, 0.32);
-});
-
-test("saves both the topics and the sensitivity when the user moves from one to the other", async (t) => {
-  const { window, chrome, type, slide } = await setup(t);
-  type("chess");
-  slide(0.2);
-  assert.equal(chrome.data.topics, "chess");
-  window.dispatchEvent(new window.Event("pagehide"));
-  assert.equal(chrome.data.threshold, 0.2);
-});
-
-test("the sensitivity can only be changed while the topic filter is on", async (t) => {
-  const { slider, toggle } = await setup(t, { stored: { topicFilter: false } });
-  assert.equal(slider.disabled, true);
-  toggle("topicFilter").click();
-  assert.equal(slider.disabled, false);
-});
-
-test("shows the sensitivity in the browser's language", async (t) => {
-  const { sliderValue } = await setup(t, { locale: "ar", stored: { threshold: 0.3 } });
-  assert.equal(sliderValue.value, (0.3).toLocaleString("ar", { minimumFractionDigits: 2 }));
-});
-
-test("describes each model state", async (t) => {
-  const { chrome, status, progressBar } = await setup(t, { stored: { topics: "chess" } });
-  assert.equal(status.hidden, false);
-  assert.equal(status.textContent, "The model loads when you open a video.");
-  assert.equal(status.getAttribute("role"), "status");
-  assert.equal(progressBar.hidden, true);
-
-  await reportStatus(chrome, { state: "loading", progress: 0.426 });
-  assert.equal(status.textContent, "Loading the model…");
-  assert.equal(progressBar.hidden, false);
-  assert.equal(progressBar.value, 43);
-  await reportStatus(chrome, { state: "ready" });
-  assert.equal(status.textContent, "The model is ready.");
-  assert.equal(progressBar.hidden, true);
-  await reportStatus(chrome, { state: "error" });
-  assert.equal(status.textContent, "Couldn't load the model. It will try again shortly.");
-  await chrome.storage.session.remove(STATUS_KEY);
+test("a switch the user just clicked still shows a change made elsewhere", async (t) => {
+  const { chrome, toggle } = await setup(t);
+  toggle("enabled").focus();
+  toggle("enabled").click();
   await flush();
-  assert.equal(status.textContent, "The model loads when you open a video.");
+  await chrome.storage.sync.set({ enabled: true });
+  await flush();
+  assert.equal(toggle("enabled").checked, true);
+  assert.equal(toggle("enforce").disabled, false);
 });
 
-test("announces loading once while the progress bar follows the download", async (t) => {
-  const { window, chrome, status, progressBar } = await setup(t, { stored: { topics: "chess" } });
-  const announced = [];
-  const observer = new window.MutationObserver(() => announced.push(status.textContent));
-  observer.observe(status, { childList: true, characterData: true, subtree: true });
-  for (const progress of [0.01, 0.02, 0.5]) await reportStatus(chrome, { state: "loading", progress });
-  assert.deepEqual(announced, ["Loading the model…"]);
-  assert.equal(progressBar.value, 50);
+// What a screen reader announces for each switch, in the order the popup shows them.
+test("each switch is named by its title and described by its hint", async (t) => {
+  const { document } = await setup(t);
+  const english = readJson("_locales/en/messages.json");
+  const textOf = (id) => document.getElementById(id).textContent;
+  const announced = [...document.querySelectorAll(".switch")].map((input) => [
+    input.name,
+    textOf(input.getAttribute("aria-labelledby")),
+    textOf(input.getAttribute("aria-describedby")),
+  ]);
+  assert.deepEqual(
+    announced,
+    [
+      ["enabled", "autoOpen", "autoOpenHint"],
+      ["enforce", "enforce", "enforceHint"],
+      ["hideShorts", "hideShorts", "hideShortsHint"],
+      ["topicFilter", "topicFilter", "topicFilterHint"],
+    ].map(([name, title, hint]) => [name, english[title].message, english[hint].message]),
+  );
 });
 
-test("shows the model status stored before the popup opened", async (t) => {
-  const { status, progressBar } = await setup(t, {
+test("shows the model status for the stored topics to see or to avoid while the topic filter is on", async (t) => {
+  const none = await setup(t, { stored: { topics: " , " } });
+  assert.equal(none.status.hidden, true);
+
+  const avoiding = await setup(t, {
+    stored: { topics: "", avoidTopics: "gaming" },
+    session: { [STATUS_KEY]: { state: "loading", progress: 0.5 } },
+  });
+  assert.equal(avoiding.status.hidden, false, "shown with only topics to avoid");
+
+  const { status, toggle } = await setup(t, {
     stored: { topics: "chess" },
     session: { [STATUS_KEY]: { state: "loading", progress: 0.5 } },
   });
+  assert.equal(status.hidden, false);
   assert.equal(status.textContent, "Loading the model…");
-  assert.equal(progressBar.value, 50);
-});
-
-test("hides the model status until there are topics to match", async (t) => {
-  const { status, type } = await setup(t);
-  assert.equal(status.hidden, true);
-  type(" , ");
-  assert.equal(status.hidden, true);
-  type("chess");
-  assert.equal(status.hidden, false);
-});
-
-test("hides the model status while the topic filter is off", async (t) => {
-  const { status, progressBar, toggle } = await setup(t, {
-    stored: { topics: "chess", topicFilter: false },
-    session: { [STATUS_KEY]: { state: "loading", progress: 0.5 } },
-  });
-  assert.equal(status.hidden, true);
-  assert.equal(progressBar.hidden, true);
   toggle("topicFilter").click();
-  assert.equal(status.hidden, false);
-  assert.equal(progressBar.hidden, false);
+  await flush();
+  assert.equal(status.hidden, true, "hidden while the topic filter is off");
 });
 
-test("ignores storage changes that aren't the model status", async (t) => {
-  const { chrome, status } = await setup(t, { stored: { topics: "chess" } });
-  await chrome.storage.session.set({ other: { state: "ready" } });
-  await chrome.storage.sync.set({ [STATUS_KEY]: { state: "ready" } });
+test("Load now in the popup asks the background to load the model", async (t) => {
+  const { document, chrome } = await setup(t, { stored: { topics: "chess" } });
+  const sent = recordMessages(chrome);
+  document.querySelector("#load-now").click();
   await flush();
-  assert.equal(status.textContent, "The model loads when you open a video.");
+  assert.deepEqual(sent, [PRELOAD]);
+});
+
+test("Load now moves focus to the model status, since the button turns off", async (t) => {
+  const { document, status } = await setup(t, { stored: { topics: "chess" } });
+  const loadButton = document.querySelector("#load-now");
+  loadButton.focus();
+  loadButton.click();
+  assert.equal(loadButton.disabled, true);
+  assert.equal(document.activeElement, status);
+});
+
+test("the summary lists the topics, and clicking it opens the options page, as screen readers hear", async (t) => {
+  const { document, chrome, summary } = await setup(t, { stored: { topics: "programming, software engineering, chess" } });
+  assert.equal(summary.textContent, "Topics: programming, software engineering, chess");
+  assert.equal(document.getElementById(summary.getAttribute("aria-describedby")).textContent, "All settings");
+  summary.click();
+  assert.equal(chrome.openedOptions, 1);
+});
+
+test("the summary says when there are no topics yet", async (t) => {
+  const { chrome, summary } = await setup(t);
+  assert.equal(summary.textContent, "No topics yet. Add some in All settings.");
+  await chrome.storage.sync.set({ topics: "chess" });
+  await flush();
+  assert.equal(summary.textContent, "Topics: chess");
+});
+
+test("the summary lists the topics to avoid", async (t) => {
+  const { document, chrome } = await setup(t, { stored: { avoidTopics: "gaming, gossip" } });
+  const topicsLine = document.querySelector("#summary-topics");
+  const avoidLine = document.querySelector("#summary-avoid");
+  assert.equal(topicsLine.hidden, true, "no \"no topics yet\" while there are topics to avoid");
+  assert.equal(avoidLine.hidden, false);
+  assert.equal(avoidLine.textContent, "Avoiding: gaming, gossip");
+
+  await chrome.storage.sync.set({ topics: "chess" });
+  await flush();
+  assert.equal(topicsLine.hidden, false);
+  assert.equal(topicsLine.textContent, "Topics: chess");
+
+  await chrome.storage.sync.set({ avoidTopics: "" });
+  await flush();
+  assert.equal(avoidLine.hidden, true);
+});
+
+const NO_PROFILE = readJson("_locales/en/messages.json").noProfile.message;
+
+// The popup's profile row and its switch.
+async function setupProfiles(t, stored) {
+  const page = await setup(t, { stored });
+  const row = page.document.querySelector("#profile-row");
+  const select = page.document.querySelector("#profile");
+  const pick = (value) => pickOption(select, value);
+  const listed = () => optionTexts(select);
+  return { ...page, row, select, pick, listed };
+}
+
+test("shows the profile switch only once a profile exists", async (t) => {
+  const none = await setupProfiles(t);
+  assert.equal(none.row.hidden, true);
+  await none.chrome.storage.sync.set({ profiles: [WORK] });
+  await flush();
+  assert.equal(none.row.hidden, false);
+  assert.deepEqual(none.listed(), [NO_PROFILE, "Work"]);
+  assert.equal(none.select.value, "");
+
+  const { row, select, listed } = await setupProfiles(t, { profiles: [WORK, EVENING], activeProfile: "Evening" });
+  assert.equal(row.hidden, false);
+  assert.deepEqual(listed(), [NO_PROFILE, "Work", "Evening"]);
+  assert.equal(select.value, "Evening", "the stored profile is selected");
+});
+
+test("switching a profile from the popup saves its topics and updates the summary", async (t) => {
+  const { chrome, summary, pick } = await setupProfiles(t, { profiles: [WORK, EVENING], activeProfile: "Work", ...WORK });
+  const avoidLine = summary.querySelector("#summary-avoid");
+  assert.equal(avoidLine.textContent, "Avoiding: gaming");
+  pick("Evening");
+  await flush();
+  const { activeProfile, topics, avoidTopics } = chrome.data;
+  assert.deepEqual({ activeProfile, topics, avoidTopics }, { activeProfile: "Evening", topics: "cooking, chess", avoidTopics: "" });
+  assert.equal(summary.querySelector("#summary-topics").textContent, "Topics: cooking, chess");
+  assert.equal(avoidLine.hidden, true);
+});
+
+test("the profile switch is disabled while the filter is off", async (t) => {
+  const { toggle, select } = await setupProfiles(t, { topicFilter: false, profiles: [WORK], activeProfile: "Work" });
+  assert.equal(select.disabled, true);
+  toggle("topicFilter").click();
+  assert.equal(select.disabled, false);
+});
+
+test("All settings and the gear open the options page", async (t) => {
+  const { document, chrome } = await setup(t);
+  const link = document.querySelector("#open-options");
+  const gear = document.querySelector("#open-options-icon");
+  assert.equal(link.textContent, "All settings");
+  assert.equal(gear.getAttribute("aria-label"), "All settings");
+  link.click();
+  gear.click();
+  assert.equal(chrome.openedOptions, 2);
 });
 
 test("uses the browser's language and direction", async (t) => {
@@ -271,12 +252,7 @@ test("uses the browser's language and direction", async (t) => {
 test("every translation fills every popup text", async (t) => {
   for (const locale of locales) {
     const { document } = await setup(t, { locale });
-    for (const element of document.querySelectorAll("[data-i18n]")) {
-      assert.notEqual(element.textContent.trim(), "", `${locale}: ${element.dataset.i18n}`);
-    }
-    for (const element of document.querySelectorAll("[data-i18n-placeholder]")) {
-      assert.notEqual(element.placeholder.trim(), "", `${locale}: ${element.dataset.i18nPlaceholder}`);
-    }
+    assert.deepEqual(untranslated(document), [], locale);
   }
 });
 
@@ -289,24 +265,33 @@ test("links to the source code in a new tab", async (t) => {
   assert.equal(link.textContent, "Source code on GitHub");
 });
 
-test("translates the topics placeholder and the model's status", async (t) => {
-  const { field, status } = await setup(t, {
-    locale: "es",
-    stored: { topics: "ajedrez" },
-    session: { [STATUS_KEY]: { state: "loading", progress: 0.07 } },
-  });
-  const messages = readJson("_locales/es/messages.json");
-  assert.equal(field.placeholder, messages.topicsPlaceholder.message);
-  assert.equal(status.textContent, "Cargando el modelo…");
-});
-
 test("translations cover the ten most spoken languages with the same messages as English", () => {
   assert.deepEqual(locales.toSorted(alphabetically), ["ar", "bn", "en", "es", "fr", "hi", "id", "pt", "ru", "zh_CN", "zh_TW"]);
-  const keys = Object.keys(readJson("_locales/en/messages.json")).toSorted(alphabetically);
+  const english = readJson("_locales/en/messages.json");
+  const keys = Object.keys(english).toSorted(alphabetically);
   for (const locale of locales) {
     const messages = readJson(`_locales/${locale}/messages.json`);
     assert.deepEqual(Object.keys(messages).toSorted(alphabetically), keys, locale);
     assert.equal(messages.lang.message.replace("-", "_"), locale, locale);
+    for (const key of keys) {
+      assert.deepEqual(placeholderNames(messages[key]), placeholderNames(english[key]), `${locale} ${key}`);
+    }
+  }
+});
+
+// The options page and the popup both name their sections and most settings in English in the
+// markup too, where checks of the markup read them, so that text has to stay the English message
+// that replaces it. One test covers both pages.
+test("the pages' English text in the markup matches the English messages", () => {
+  const english = readJson("_locales/en/messages.json");
+  for (const path of ["src/options.html", "src/popup.html"]) {
+    const { document } = new JSDOM(read(path)).window;
+    const named = [...document.querySelectorAll("[data-i18n]")].filter((element) => element.textContent);
+    assert.deepEqual(
+      named.map((element) => [element.dataset.i18n, element.textContent]),
+      named.map((element) => [element.dataset.i18n, english[element.dataset.i18n].message]),
+      path,
+    );
   }
 });
 

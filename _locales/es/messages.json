@@ -1,6 +1,6 @@
 {
   "extDescription": {
-    "message": "Abre tu feed personalizado en la página principal de YouTube y oculta los videos fuera de tema junto al que estás viendo."
+    "message": "Abre tu feed personalizado en la página principal de YouTube y oculta las recomendaciones que no coinciden con tus temas."
   },
   "lang": {
     "message": "es"
@@ -24,10 +24,13 @@
     "message": "Quita los Shorts de los feeds, la búsqueda y la barra lateral, y abre los enlaces de Shorts como videos normales."
   },
   "topicFilter": {
-    "message": "Filtrar recomendaciones por tema"
+    "message": "Filtrar recomendaciones"
   },
   "topicFilterHint": {
-    "message": "Oculta los videos junto al que estás viendo que no coinciden con tus temas. Usa un modelo de IA en tu equipo."
+    "message": "Oculta los videos que no coinciden con tus temas, que coinciden con temas que quieres evitar o que son de canales que ocultas siempre, en las páginas marcadas en Dónde filtrar, en Todos los ajustes. Usa un modelo de IA en tu equipo."
+  },
+  "topicFilterHintHere": {
+    "message": "Oculta los videos que no coinciden con tus temas, que coinciden con temas que quieres evitar o que son de canales que ocultas siempre, en las páginas marcadas en Dónde filtrar, más abajo. Usa un modelo de IA en tu equipo."
   },
   "topics": {
     "message": "Temas que quieres ver"
@@ -38,14 +41,17 @@
   "topicsHint": {
     "message": "Separa los temas con comas."
   },
-  "sensitivity": {
-    "message": "Sensibilidad del filtro"
+  "threshold": {
+    "message": "Coincidencia necesaria para mostrar"
   },
-  "sensitivityHint": {
-    "message": "Más alta oculta más videos; más baja muestra más."
+  "thresholdHint": {
+    "message": "Cuánto debe coincidir, como mínimo, un video con uno de tus temas para seguir visible. Más alta oculta más."
+  },
+  "thresholdHintEmpty": {
+    "message": "No tiene efecto hasta que agregues un tema que quieras ver."
   },
   "modelIdle": {
-    "message": "El modelo se carga cuando abres un video."
+    "message": "El modelo se carga cuando una página lo necesita o cuando haces clic en Cargar ahora."
   },
   "modelLoading": {
     "message": "Cargando el modelo…"
@@ -58,5 +64,333 @@
   },
   "sourceCode": {
     "message": "Código fuente en GitHub"
+  },
+  "allSettings": {
+    "message": "Todos los ajustes"
+  },
+  "homeSection": {
+    "message": "Inicio y Shorts"
+  },
+  "topicsSection": {
+    "message": "Temas"
+  },
+  "summaryTopics": {
+    "message": "Temas: $TOPICS$",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "chess, cooking"
+      }
+    }
+  },
+  "noTopicsYet": {
+    "message": "Aún no hay temas. Agrega algunos en Todos los ajustes."
+  },
+  "avoidTopics": {
+    "message": "Temas que quieres evitar"
+  },
+  "avoidTopicsPlaceholder": {
+    "message": "videojuegos, chismes de famosos"
+  },
+  "avoidTopicsHint": {
+    "message": "Se ocultan los videos que coinciden con uno de estos temas más que con los que quieres ver. Separa los temas con comas."
+  },
+  "avoidThreshold": {
+    "message": "Coincidencia que oculta"
+  },
+  "avoidThresholdHint": {
+    "message": "Un video se oculta por un tema a evitar solo si coincide con él en esta medida o más, y más que con tus temas. Más baja oculta más."
+  },
+  "avoidThresholdHintEmpty": {
+    "message": "No tiene efecto hasta que agregues un tema a evitar."
+  },
+  "summaryAvoiding": {
+    "message": "Evitando: $TOPICS$",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "gaming, gossip"
+      }
+    }
+  },
+  "loadNow": {
+    "message": "Cargar ahora"
+  },
+  "tryTitle": {
+    "message": "Prueba un título"
+  },
+  "tryTitlePlaceholder": {
+    "message": "Cómo vencer a la defensa siciliana"
+  },
+  "tryTitleHint": {
+    "message": "Escribe el título de un video para ver si el filtro lo mostraría u ocultaría con los ajustes de arriba."
+  },
+  "tryScores": {
+    "message": "Coincidencia con tus temas: $WANT$ · Coincidencia con temas a evitar: $AVOID$",
+    "placeholders": {
+      "want": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "avoid": {
+        "content": "$2",
+        "example": "none"
+      }
+    }
+  },
+  "tryScoreNone": {
+    "message": "ninguno"
+  },
+  "tryShown": {
+    "message": "Se muestra"
+  },
+  "tryHidden": {
+    "message": "Se oculta"
+  },
+  "tryAvoided": {
+    "message": "Se oculta: coincide con un tema a evitar en $SCORE$ y alcanza el $LINE$ que oculta.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryAvoidedMore": {
+    "message": "Se oculta: coincide con un tema a evitar en $AVOID$, más que con tus temas, en $WANT$.",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryAvoidedNotMore": {
+    "message": "Se muestra: coincide con un tema a evitar en $AVOID$, pero no más que con tus temas, en $WANT$.",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryOffTopic": {
+    "message": "Se oculta: coincide con tus temas solo en $SCORE$, por debajo del $LINE$ necesario.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryOnTopic": {
+    "message": "Se muestra: coincide con tus temas en $SCORE$ y alcanza el $LINE$ necesario.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNotAvoided": {
+    "message": "Se muestra: coincide con un tema a evitar solo en $SCORE$, por debajo del $LINE$ que oculta.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNeedsTopics": {
+    "message": "Añade un tema arriba para probar un título."
+  },
+  "tryError": {
+    "message": "No se pudo comprobar el título. Vuelve a intentarlo en breve."
+  },
+  "hiddenRowOne": {
+    "message": "1 video oculto"
+  },
+  "hiddenRowMany": {
+    "message": "$COUNT$ videos ocultos",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "showHidden": {
+    "message": "Mostrarlos"
+  },
+  "hideHidden": {
+    "message": "Volver a ocultarlos"
+  },
+  "filterPages": {
+    "message": "Dónde filtrar"
+  },
+  "filterPagesHint": {
+    "message": "Cada lista filtrada empieza con una fila que indica cuántos videos están ocultos y permite mostrarlos."
+  },
+  "filterWatch": {
+    "message": "Junto al video que estás viendo"
+  },
+  "filterHome": {
+    "message": "Inicio"
+  },
+  "filterSubscriptions": {
+    "message": "Suscripciones"
+  },
+  "filterSearch": {
+    "message": "Resultados de búsqueda"
+  },
+  "channels": {
+    "message": "Canales"
+  },
+  "allowedChannels": {
+    "message": "No ocultar nunca estos canales"
+  },
+  "allowedChannelsHint": {
+    "message": "Los videos de estos canales siguen visibles, sea cual sea su tema."
+  },
+  "blockedChannels": {
+    "message": "Ocultar siempre estos canales"
+  },
+  "blockedChannelsHint": {
+    "message": "Los videos de estos canales se ocultan en todas las páginas marcadas en Dónde filtrar."
+  },
+  "channelsHint": {
+    "message": "Un canal por línea, con el nombre que aparece en YouTube."
+  },
+  "listFull": {
+    "message": "Una lista admite hasta 50 canales. Solo se guardan los primeros 50."
+  },
+  "saveFailed": {
+    "message": "No se pudo guardar el cambio. Vuelve a intentarlo en un minuto."
+  },
+  "menuAllowChannel": {
+    "message": "No ocultar nunca este canal"
+  },
+  "menuBlockChannel": {
+    "message": "Ocultar siempre este canal"
+  },
+  "channelAllowed": {
+    "message": "El canal $CHANNEL$ no se ocultará nunca.",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "channelBlocked": {
+    "message": "El canal $CHANNEL$ se ocultará siempre.",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "noChannelPicked": {
+    "message": "Haz clic con el botón derecho en la miniatura o el título de un video para elegir su canal."
+  },
+  "channelListFull": {
+    "message": "Esa lista está llena. Primero quita un canal en Todos los ajustes."
+  },
+  "channelSavedNotFiltered": {
+    "message": "Se aplica donde Filtrar recomendaciones está activado y la página está marcada en Dónde filtrar."
+  },
+  "channelsMenuHint": {
+    "message": "También puedes hacer clic con el botón derecho en la miniatura o el título de un video en YouTube para añadir su canal."
+  },
+  "commandToggleFilter": {
+    "message": "Activar o desactivar Filtrar recomendaciones"
+  },
+  "commandToggleShorts": {
+    "message": "Activar o desactivar Ocultar Shorts"
+  },
+  "topicFilterOn": {
+    "message": "Filtrar recomendaciones está activado"
+  },
+  "topicFilterOff": {
+    "message": "Filtrar recomendaciones está desactivado"
+  },
+  "hideShortsOn": {
+    "message": "Ocultar Shorts está activado"
+  },
+  "hideShortsOff": {
+    "message": "Ocultar Shorts está desactivado"
+  },
+  "shortcuts": {
+    "message": "Atajos de teclado"
+  },
+  "shortcutsHint": {
+    "message": "Chrome deja un atajo sin asignar cuando otra extensión ya lo usa."
+  },
+  "shortcutUnset": {
+    "message": "Sin asignar"
+  },
+  "changeShortcuts": {
+    "message": "Cambiar atajos"
+  },
+  "profilesSection": {
+    "message": "Perfiles"
+  },
+  "profile": {
+    "message": "Perfil"
+  },
+  "noProfile": {
+    "message": "Sin perfil"
+  },
+  "profileName": {
+    "message": "Nombre del perfil"
+  },
+  "profileNamePlaceholder": {
+    "message": "Trabajo"
+  },
+  "saveProfile": {
+    "message": "Guardar como perfil nuevo"
+  },
+  "renameProfile": {
+    "message": "Cambiar nombre"
+  },
+  "deleteProfile": {
+    "message": "Eliminar"
+  },
+  "profilesHint": {
+    "message": "Un perfil guarda con un nombre los temas de arriba y los dos controles deslizantes, Coincidencia necesaria para mostrar y Coincidencia que oculta. Cambia de perfil aquí o desde la ventana de la extensión en la barra de herramientas. Pasar de Sin perfil a un perfil reemplaza los temas y los controles deslizantes, así que guárdalos antes como perfil para conservarlos."
+  },
+  "profileNameTaken": {
+    "message": "Ya existe un perfil con ese nombre."
+  },
+  "profilesFull": {
+    "message": "No hay espacio para otro perfil. Elimina uno o acorta los temas de los demás."
+  },
+  "profileChangeTooLarge": {
+    "message": "Este cambio ya se aplica, pero no cabe en el perfil, que conserva lo que tenía. Acorta los temas o elimina otro perfil."
   }
 }

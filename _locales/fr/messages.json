@@ -1,6 +1,6 @@
 {
   "extDescription": {
-    "message": "Ouvre votre flux personnalisé sur l'accueil YouTube et masque les vidéos hors sujet à côté de celle que vous regardez."
+    "message": "Ouvre votre flux personnalisé sur l'accueil YouTube et masque les recommandations qui ne correspondent pas à vos sujets."
   },
   "lang": {
     "message": "fr"
@@ -24,10 +24,13 @@
     "message": "Retire les Shorts des flux, de la recherche et de la barre latérale, et ouvre les liens de Shorts comme des vidéos classiques."
   },
   "topicFilter": {
-    "message": "Filtrer les recommandations par sujet"
+    "message": "Filtrer les recommandations"
   },
   "topicFilterHint": {
-    "message": "Masque les vidéos à côté de celle que vous regardez qui ne correspondent pas à vos sujets. Utilise un modèle d'IA sur votre ordinateur."
+    "message": "Masque les vidéos qui ne correspondent pas à vos sujets, qui correspondent à des sujets que vous voulez éviter ou qui viennent de chaînes que vous masquez toujours, sur les pages cochées dans Où filtrer, dans Tous les paramètres. Utilise un modèle d'IA sur votre ordinateur."
+  },
+  "topicFilterHintHere": {
+    "message": "Masque les vidéos qui ne correspondent pas à vos sujets, qui correspondent à des sujets que vous voulez éviter ou qui viennent de chaînes que vous masquez toujours, sur les pages cochées dans Où filtrer, plus bas. Utilise un modèle d'IA sur votre ordinateur."
   },
   "topics": {
     "message": "Sujets que vous voulez voir"
@@ -38,14 +41,17 @@
   "topicsHint": {
     "message": "Séparez les sujets par des virgules."
   },
-  "sensitivity": {
-    "message": "Sensibilité du filtre"
+  "threshold": {
+    "message": "Correspondance requise pour afficher"
   },
-  "sensitivityHint": {
-    "message": "Plus elle est haute, plus de vidéos sont masquées ; plus elle est basse, plus il en reste."
+  "thresholdHint": {
+    "message": "À quel point une vidéo doit au moins correspondre à l'un de vos sujets pour rester. Plus elle est haute, plus de vidéos sont masquées."
+  },
+  "thresholdHintEmpty": {
+    "message": "Sans effet tant que vous n'avez pas ajouté de sujet que vous voulez voir."
   },
   "modelIdle": {
-    "message": "Le modèle se charge quand vous ouvrez une vidéo."
+    "message": "Le modèle se charge quand une page en a besoin, ou quand vous cliquez sur Charger maintenant."
   },
   "modelLoading": {
     "message": "Chargement du modèle…"
@@ -58,5 +64,333 @@
   },
   "sourceCode": {
     "message": "Code source sur GitHub"
+  },
+  "allSettings": {
+    "message": "Tous les paramètres"
+  },
+  "homeSection": {
+    "message": "Accueil et Shorts"
+  },
+  "topicsSection": {
+    "message": "Sujets"
+  },
+  "summaryTopics": {
+    "message": "Sujets : $TOPICS$",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "chess, cooking"
+      }
+    }
+  },
+  "noTopicsYet": {
+    "message": "Aucun sujet pour l'instant. Ajoutez-en dans Tous les paramètres."
+  },
+  "avoidTopics": {
+    "message": "Sujets que vous voulez éviter"
+  },
+  "avoidTopicsPlaceholder": {
+    "message": "jeux vidéo, potins de célébrités"
+  },
+  "avoidTopicsHint": {
+    "message": "Les vidéos qui correspondent davantage à l'un de ces sujets qu'à vos sujets sont masquées. Séparez les sujets par des virgules."
+  },
+  "avoidThreshold": {
+    "message": "Correspondance qui masque"
+  },
+  "avoidThresholdHint": {
+    "message": "Une vidéo n'est masquée pour un sujet à éviter que si elle lui correspond autant ou plus, et davantage qu'à vos sujets. Plus elle est basse, plus de vidéos sont masquées."
+  },
+  "avoidThresholdHintEmpty": {
+    "message": "Sans effet tant que vous n'avez pas ajouté de sujet à éviter."
+  },
+  "summaryAvoiding": {
+    "message": "À éviter : $TOPICS$",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "gaming, gossip"
+      }
+    }
+  },
+  "loadNow": {
+    "message": "Charger maintenant"
+  },
+  "tryTitle": {
+    "message": "Tester un titre"
+  },
+  "tryTitlePlaceholder": {
+    "message": "Comment battre la défense sicilienne"
+  },
+  "tryTitleHint": {
+    "message": "Saisissez un titre de vidéo pour voir si le filtre l'afficherait ou le masquerait avec les réglages ci-dessus."
+  },
+  "tryScores": {
+    "message": "Correspondance avec vos sujets : $WANT$ · Correspondance avec les sujets à éviter : $AVOID$",
+    "placeholders": {
+      "want": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "avoid": {
+        "content": "$2",
+        "example": "none"
+      }
+    }
+  },
+  "tryScoreNone": {
+    "message": "aucun"
+  },
+  "tryShown": {
+    "message": "Affiché"
+  },
+  "tryHidden": {
+    "message": "Masqué"
+  },
+  "tryAvoided": {
+    "message": "Masqué : correspond à un sujet à éviter à $SCORE$, ce qui atteint les $LINE$ qui masquent.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryAvoidedMore": {
+    "message": "Masqué : correspond à un sujet à éviter à $AVOID$, plus qu'à vos sujets, à $WANT$.",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryAvoidedNotMore": {
+    "message": "Affiché : correspond à un sujet à éviter à $AVOID$, mais pas plus qu'à vos sujets, à $WANT$.",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryOffTopic": {
+    "message": "Masqué : correspond à vos sujets à seulement $SCORE$, sous les $LINE$ requis.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryOnTopic": {
+    "message": "Affiché : correspond à vos sujets à $SCORE$, ce qui atteint les $LINE$ requis.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNotAvoided": {
+    "message": "Affiché : correspond à un sujet à éviter à seulement $SCORE$, sous les $LINE$ qui masquent.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNeedsTopics": {
+    "message": "Ajoutez un sujet ci-dessus pour tester un titre."
+  },
+  "tryError": {
+    "message": "Impossible de vérifier le titre. Réessayez sous peu."
+  },
+  "hiddenRowOne": {
+    "message": "1 vidéo masquée"
+  },
+  "hiddenRowMany": {
+    "message": "$COUNT$ vidéos masquées",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "showHidden": {
+    "message": "Les afficher"
+  },
+  "hideHidden": {
+    "message": "Les masquer à nouveau"
+  },
+  "filterPages": {
+    "message": "Où filtrer"
+  },
+  "filterPagesHint": {
+    "message": "Chaque liste filtrée commence par une ligne qui indique combien de vidéos sont masquées et permet de les afficher."
+  },
+  "filterWatch": {
+    "message": "À côté de la vidéo que vous regardez"
+  },
+  "filterHome": {
+    "message": "Accueil"
+  },
+  "filterSubscriptions": {
+    "message": "Abonnements"
+  },
+  "filterSearch": {
+    "message": "Résultats de recherche"
+  },
+  "channels": {
+    "message": "Chaînes"
+  },
+  "allowedChannels": {
+    "message": "Ne jamais masquer ces chaînes"
+  },
+  "allowedChannelsHint": {
+    "message": "Les vidéos de ces chaînes restent visibles, quel que soit leur sujet."
+  },
+  "blockedChannels": {
+    "message": "Toujours masquer ces chaînes"
+  },
+  "blockedChannelsHint": {
+    "message": "Les vidéos de ces chaînes sont masquées sur toutes les pages cochées dans Où filtrer."
+  },
+  "channelsHint": {
+    "message": "Une chaîne par ligne, avec son nom tel qu'il apparaît sur YouTube."
+  },
+  "listFull": {
+    "message": "Une liste contient jusqu'à 50 chaînes. Seules les 50 premières sont enregistrées."
+  },
+  "saveFailed": {
+    "message": "Impossible d'enregistrer votre modification. Réessayez dans une minute."
+  },
+  "menuAllowChannel": {
+    "message": "Ne jamais masquer cette chaîne"
+  },
+  "menuBlockChannel": {
+    "message": "Toujours masquer cette chaîne"
+  },
+  "channelAllowed": {
+    "message": "La chaîne $CHANNEL$ ne sera jamais masquée.",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "channelBlocked": {
+    "message": "La chaîne $CHANNEL$ sera toujours masquée.",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "noChannelPicked": {
+    "message": "Faites un clic droit sur la miniature ou le titre d'une vidéo pour choisir sa chaîne."
+  },
+  "channelListFull": {
+    "message": "Cette liste est pleine. Retirez d'abord une chaîne dans Tous les paramètres."
+  },
+  "channelSavedNotFiltered": {
+    "message": "Cela s'applique là où Filtrer les recommandations est activé et où la page est cochée dans Où filtrer."
+  },
+  "channelsMenuHint": {
+    "message": "Vous pouvez aussi faire un clic droit sur la miniature ou le titre d'une vidéo sur YouTube pour ajouter sa chaîne."
+  },
+  "commandToggleFilter": {
+    "message": "Activer ou désactiver Filtrer les recommandations"
+  },
+  "commandToggleShorts": {
+    "message": "Activer ou désactiver Masquer les Shorts"
+  },
+  "topicFilterOn": {
+    "message": "Filtrer les recommandations est activé"
+  },
+  "topicFilterOff": {
+    "message": "Filtrer les recommandations est désactivé"
+  },
+  "hideShortsOn": {
+    "message": "Masquer les Shorts est activé"
+  },
+  "hideShortsOff": {
+    "message": "Masquer les Shorts est désactivé"
+  },
+  "shortcuts": {
+    "message": "Raccourcis clavier"
+  },
+  "shortcutsHint": {
+    "message": "Chrome laisse un raccourci non défini lorsqu'une autre extension l'utilise déjà."
+  },
+  "shortcutUnset": {
+    "message": "Non défini"
+  },
+  "changeShortcuts": {
+    "message": "Modifier les raccourcis"
+  },
+  "profilesSection": {
+    "message": "Profils"
+  },
+  "profile": {
+    "message": "Profil"
+  },
+  "noProfile": {
+    "message": "Aucun profil"
+  },
+  "profileName": {
+    "message": "Nom du profil"
+  },
+  "profileNamePlaceholder": {
+    "message": "Travail"
+  },
+  "saveProfile": {
+    "message": "Enregistrer comme nouveau profil"
+  },
+  "renameProfile": {
+    "message": "Renommer"
+  },
+  "deleteProfile": {
+    "message": "Supprimer"
+  },
+  "profilesHint": {
+    "message": "Un profil enregistre sous un nom les sujets ci-dessus et les deux curseurs, Correspondance requise pour afficher et Correspondance qui masque. Changez de profil ici ou depuis la fenêtre de l'extension dans la barre d'outils. Passer d'Aucun profil à un profil remplace les sujets et les curseurs : enregistrez-les d'abord comme profil pour les garder."
+  },
+  "profileNameTaken": {
+    "message": "Un profil porte déjà ce nom."
+  },
+  "profilesFull": {
+    "message": "Plus de place pour un autre profil. Supprimez-en un ou raccourcissez les sujets des autres."
+  },
+  "profileChangeTooLarge": {
+    "message": "Cette modification s'applique déjà, mais elle ne tient pas dans le profil, qui garde ce qu'il avait. Raccourcissez les sujets ou supprimez un autre profil."
   }
 }

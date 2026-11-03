@@ -11,7 +11,8 @@
     "48": "src/icons/icon-48.png",
     "128": "src/icons/icon-128.png"
   },
-  "permissions": ["storage", "offscreen"],
+  "permissions": ["storage", "offscreen", "contextMenus", "declarativeNetRequestWithHostAccess"],
+  "host_permissions": ["https://www.youtube.com/*", "https://youtube.com/*"],
   "background": {
     "service_worker": "src/background.js"
   },
@@ -23,6 +24,37 @@
       "128": "src/icons/icon-128.png"
     },
     "default_popup": "src/popup.html"
+  },
+  "options_ui": {
+    "page": "src/options.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "toggle-topic-filter": {
+      "suggested_key": {
+        "default": "Alt+Shift+F",
+        "mac": "MacCtrl+Shift+F",
+        "chromeos": "Alt+Shift+F"
+      },
+      "description": "__MSG_commandToggleFilter__"
+    },
+    "toggle-hide-shorts": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "MacCtrl+Shift+S",
+        "chromeos": "Alt+Shift+H"
+      },
+      "description": "__MSG_commandToggleShorts__"
+    }
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "shorts_redirect",
+        "enabled": false,
+        "path": "src/rules/shorts-redirect.json"
+      }
+    ]
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
@@ -39,13 +71,18 @@
       "js": [
         "src/scheduler.js",
         "src/labels.js",
+        "src/cards.js",
         "src/content.js",
         "src/protocol.js",
         "src/topics.js",
-        "src/sidebar.js",
-        "src/topic-filter.js"
+        "src/verdict.js",
+        "src/channels.js",
+        "src/hidden-row.js",
+        "src/toast.js",
+        "src/channel-menu.js",
+        "src/filter.js"
       ],
-      "css": ["src/topic-filter.css"],
+      "css": ["src/filter.css"],
       "run_at": "document_idle"
     }
   ]

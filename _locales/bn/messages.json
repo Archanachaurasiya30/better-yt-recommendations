@@ -1,6 +1,6 @@
 {
   "extDescription": {
-    "message": "YouTube হোমে আপনার কাস্টম ফিড খোলে এবং আপনি যে ভিডিও দেখছেন তার পাশে অপ্রাসঙ্গিক ভিডিও লুকিয়ে রাখে।"
+    "message": "YouTube হোমে আপনার কাস্টম ফিড খোলে এবং আপনার বিষয়ের সঙ্গে মেলে না এমন সুপারিশ লুকিয়ে রাখে।"
   },
   "lang": {
     "message": "bn"
@@ -24,10 +24,13 @@
     "message": "ফিড, সার্চ ও সাইডবার থেকে Shorts সরিয়ে দেয়, আর Shorts-এর লিঙ্ক সাধারণ ভিডিও হিসেবে খোলে।"
   },
   "topicFilter": {
-    "message": "বিষয় অনুযায়ী সুপারিশ ফিল্টার করুন"
+    "message": "সুপারিশ ফিল্টার করুন"
   },
   "topicFilterHint": {
-    "message": "আপনি যে ভিডিও দেখছেন তার পাশের যেসব ভিডিও আপনার বিষয়ের সঙ্গে মেলে না, সেগুলো লুকিয়ে রাখে। আপনার কম্পিউটারে একটি AI মডেল ব্যবহার করে।"
+    "message": "সব সেটিংসের \"কোথায় ফিল্টার করবেন\" অংশে চিহ্নিত পেজগুলোতে, যেসব ভিডিও আপনার বিষয়ের সঙ্গে মেলে না, আপনি যেসব বিষয় এড়াতে চান তার সঙ্গে মেলে, বা যেসব চ্যানেল আপনি সবসময় লুকান সেগুলো থেকে আসে, সেগুলো লুকিয়ে রাখে। আপনার কম্পিউটারে একটি AI মডেল ব্যবহার করে।"
+  },
+  "topicFilterHintHere": {
+    "message": "নিচের \"কোথায় ফিল্টার করবেন\" অংশে চিহ্নিত পেজগুলোতে, যেসব ভিডিও আপনার বিষয়ের সঙ্গে মেলে না, আপনি যেসব বিষয় এড়াতে চান তার সঙ্গে মেলে, বা যেসব চ্যানেল আপনি সবসময় লুকান সেগুলো থেকে আসে, সেগুলো লুকিয়ে রাখে। আপনার কম্পিউটারে একটি AI মডেল ব্যবহার করে।"
   },
   "topics": {
     "message": "আপনি যেসব বিষয় দেখতে চান"
@@ -38,14 +41,17 @@
   "topicsHint": {
     "message": "বিষয়গুলো কমা দিয়ে আলাদা করুন।"
   },
-  "sensitivity": {
-    "message": "ফিল্টারের সংবেদনশীলতা"
+  "threshold": {
+    "message": "দেখানোর জন্য দরকারি মিল"
   },
-  "sensitivityHint": {
-    "message": "বাড়ালে আরও ভিডিও লুকায়; কমালে আরও ভিডিও দেখায়।"
+  "thresholdHint": {
+    "message": "দেখা যেতে থাকার জন্য কোনো ভিডিওকে আপনার কোনো একটি বিষয়ের সঙ্গে অন্তত এতটা মিলতে হবে। বাড়ালে আরও বেশি ভিডিও লুকায়।"
+  },
+  "thresholdHintEmpty": {
+    "message": "দেখতে চান এমন কোনো বিষয় যোগ না করা পর্যন্ত এর কোনো প্রভাব নেই।"
   },
   "modelIdle": {
-    "message": "আপনি একটি ভিডিও খুললে মডেলটি লোড হবে।"
+    "message": "কোনো পেজে দরকার হলে, অথবা এখনই লোড করুন-এ ক্লিক করলে মডেলটি লোড হবে।"
   },
   "modelLoading": {
     "message": "মডেল লোড হচ্ছে…"
@@ -58,5 +64,333 @@
   },
   "sourceCode": {
     "message": "GitHub-এ সোর্স কোড"
+  },
+  "allSettings": {
+    "message": "সব সেটিংস"
+  },
+  "homeSection": {
+    "message": "হোম ও Shorts"
+  },
+  "topicsSection": {
+    "message": "বিষয়"
+  },
+  "summaryTopics": {
+    "message": "বিষয়: $TOPICS$",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "chess, cooking"
+      }
+    }
+  },
+  "noTopicsYet": {
+    "message": "এখনও কোনো বিষয় নেই। সব সেটিংস-এ কয়েকটি যোগ করুন।"
+  },
+  "avoidTopics": {
+    "message": "আপনি যেসব বিষয় এড়াতে চান"
+  },
+  "avoidTopicsPlaceholder": {
+    "message": "গেমিং, তারকাদের গসিপ"
+  },
+  "avoidTopicsHint": {
+    "message": "যেসব ভিডিও আপনার বিষয়ের চেয়ে এগুলোর কোনো একটির সঙ্গে বেশি মেলে, সেগুলো লুকানো হয়। বিষয়গুলো কমা দিয়ে আলাদা করুন।"
+  },
+  "avoidThreshold": {
+    "message": "যে মিলে লুকায়"
+  },
+  "avoidThresholdHint": {
+    "message": "এড়ানোর কোনো বিষয়ের জন্য ভিডিও তখনই লুকানো হয়, যখন সেটি ওই বিষয়ের সঙ্গে এতটা বা এর বেশি মেলে, আর আপনার বিষয়ের চেয়েও বেশি মেলে। কমালে আরও বেশি ভিডিও লুকায়।"
+  },
+  "avoidThresholdHintEmpty": {
+    "message": "এড়াতে চান এমন কোনো বিষয় যোগ না করা পর্যন্ত এর কোনো প্রভাব নেই।"
+  },
+  "summaryAvoiding": {
+    "message": "এড়ানো হচ্ছে: $TOPICS$",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "gaming, gossip"
+      }
+    }
+  },
+  "loadNow": {
+    "message": "এখনই লোড করুন"
+  },
+  "tryTitle": {
+    "message": "একটি শিরোনাম পরীক্ষা করুন"
+  },
+  "tryTitlePlaceholder": {
+    "message": "সিসিলিয়ান ডিফেন্সকে কীভাবে হারাবেন"
+  },
+  "tryTitleHint": {
+    "message": "উপরের সেটিংসে ফিল্টার কোনো ভিডিও দেখাবে নাকি লুকাবে, তা দেখতে একটি ভিডিওর শিরোনাম লিখুন।"
+  },
+  "tryScores": {
+    "message": "আপনার বিষয়ের সঙ্গে মিল: $WANT$ · এড়ানোর বিষয়ের সঙ্গে মিল: $AVOID$",
+    "placeholders": {
+      "want": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "avoid": {
+        "content": "$2",
+        "example": "none"
+      }
+    }
+  },
+  "tryScoreNone": {
+    "message": "নেই"
+  },
+  "tryShown": {
+    "message": "দেখানো হবে"
+  },
+  "tryHidden": {
+    "message": "লুকানো হবে"
+  },
+  "tryAvoided": {
+    "message": "লুকানো হবে: এড়ানোর একটি বিষয়ের সঙ্গে মিল $SCORE$, যা লুকানোর $LINE$ ছুঁয়েছে।",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryAvoidedMore": {
+    "message": "লুকানো হবে: এড়ানোর একটি বিষয়ের সঙ্গে মিল $AVOID$, যা আপনার বিষয়ের সঙ্গে মিল $WANT$-এর চেয়ে বেশি।",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryAvoidedNotMore": {
+    "message": "দেখানো হবে: এড়ানোর একটি বিষয়ের সঙ্গে মিল $AVOID$, কিন্তু তা আপনার বিষয়ের সঙ্গে মিল $WANT$-এর চেয়ে বেশি নয়।",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryOffTopic": {
+    "message": "লুকানো হবে: আপনার বিষয়ের সঙ্গে মিল মাত্র $SCORE$, দরকারি $LINE$-এর কম।",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryOnTopic": {
+    "message": "দেখানো হবে: আপনার বিষয়ের সঙ্গে মিল $SCORE$, যা দরকারি $LINE$ ছুঁয়েছে।",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNotAvoided": {
+    "message": "দেখানো হবে: এড়ানোর একটি বিষয়ের সঙ্গে মিল মাত্র $SCORE$, লুকানোর $LINE$-এর কম।",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNeedsTopics": {
+    "message": "শিরোনাম পরীক্ষা করতে উপরে একটি বিষয় যোগ করুন।"
+  },
+  "tryError": {
+    "message": "শিরোনামটি পরীক্ষা করা যায়নি। একটু পরে আবার চেষ্টা করুন।"
+  },
+  "hiddenRowOne": {
+    "message": "একটি ভিডিও লুকানো হয়েছে"
+  },
+  "hiddenRowMany": {
+    "message": "$COUNT$টি ভিডিও লুকানো হয়েছে",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "showHidden": {
+    "message": "দেখান"
+  },
+  "hideHidden": {
+    "message": "আবার লুকান"
+  },
+  "filterPages": {
+    "message": "কোথায় ফিল্টার করবেন"
+  },
+  "filterPagesHint": {
+    "message": "প্রতিটি ফিল্টার করা তালিকার শুরুতে একটি সারি থাকে, যা জানায় কতগুলো ভিডিও লুকানো আছে এবং সেগুলো দেখাতে পারে।"
+  },
+  "filterWatch": {
+    "message": "আপনি যে ভিডিও দেখছেন তার পাশে"
+  },
+  "filterHome": {
+    "message": "হোম"
+  },
+  "filterSubscriptions": {
+    "message": "সাবস্ক্রিপশন"
+  },
+  "filterSearch": {
+    "message": "সার্চের ফলাফল"
+  },
+  "channels": {
+    "message": "চ্যানেল"
+  },
+  "allowedChannels": {
+    "message": "এই চ্যানেলগুলো কখনো লুকাবেন না"
+  },
+  "allowedChannelsHint": {
+    "message": "এই চ্যানেলগুলোর ভিডিও দেখা যাবে, বিষয় যা-ই হোক।"
+  },
+  "blockedChannels": {
+    "message": "এই চ্যানেলগুলো সবসময় লুকান"
+  },
+  "blockedChannelsHint": {
+    "message": "\"কোথায় ফিল্টার করবেন\" অংশে চিহ্নিত প্রতিটি পেজে এই চ্যানেলগুলোর ভিডিও লুকানো থাকে।"
+  },
+  "channelsHint": {
+    "message": "প্রতি লাইনে একটি চ্যানেল, YouTube-এ নামটি যেভাবে দেখায় সেভাবে।"
+  },
+  "listFull": {
+    "message": "একটি তালিকায় সর্বোচ্চ ৫০টি চ্যানেল রাখা যায়। শুধু প্রথম ৫০টি সংরক্ষণ করা হয়।"
+  },
+  "saveFailed": {
+    "message": "আপনার পরিবর্তন সংরক্ষণ করা যায়নি। এক মিনিট পরে আবার চেষ্টা করুন।"
+  },
+  "menuAllowChannel": {
+    "message": "এই চ্যানেলটি কখনো লুকাবেন না"
+  },
+  "menuBlockChannel": {
+    "message": "এই চ্যানেলটি সবসময় লুকান"
+  },
+  "channelAllowed": {
+    "message": "$CHANNEL$ কখনো লুকানো হবে না।",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "channelBlocked": {
+    "message": "$CHANNEL$ সবসময় লুকানো থাকবে।",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "noChannelPicked": {
+    "message": "কোনো ভিডিওর চ্যানেল বেছে নিতে তার থাম্বনেইল বা শিরোনামে রাইট-ক্লিক করুন।"
+  },
+  "channelListFull": {
+    "message": "তালিকাটি পূর্ণ। আগে সব সেটিংসে গিয়ে একটি চ্যানেল সরান।"
+  },
+  "channelSavedNotFiltered": {
+    "message": "এটি সেখানে প্রযোজ্য, যেখানে \"সুপারিশ ফিল্টার করুন\" চালু আছে এবং পেজটি \"কোথায় ফিল্টার করবেন\" অংশে চিহ্নিত আছে।"
+  },
+  "channelsMenuHint": {
+    "message": "YouTube-এ কোনো ভিডিওর থাম্বনেইল বা শিরোনামে রাইট-ক্লিক করেও তার চ্যানেল যোগ করতে পারেন।"
+  },
+  "commandToggleFilter": {
+    "message": "\"সুপারিশ ফিল্টার করুন\" চালু বা বন্ধ করুন"
+  },
+  "commandToggleShorts": {
+    "message": "\"Shorts লুকান\" চালু বা বন্ধ করুন"
+  },
+  "topicFilterOn": {
+    "message": "\"সুপারিশ ফিল্টার করুন\" চালু আছে"
+  },
+  "topicFilterOff": {
+    "message": "\"সুপারিশ ফিল্টার করুন\" বন্ধ আছে"
+  },
+  "hideShortsOn": {
+    "message": "\"Shorts লুকান\" চালু আছে"
+  },
+  "hideShortsOff": {
+    "message": "\"Shorts লুকান\" বন্ধ আছে"
+  },
+  "shortcuts": {
+    "message": "কীবোর্ড শর্টকাট"
+  },
+  "shortcutsHint": {
+    "message": "অন্য কোনো এক্সটেনশন আগে থেকেই কোনো শর্টকাট ব্যবহার করলে Chrome সেটি সেট করে না।"
+  },
+  "shortcutUnset": {
+    "message": "সেট করা নেই"
+  },
+  "changeShortcuts": {
+    "message": "শর্টকাট পরিবর্তন করুন"
+  },
+  "profilesSection": {
+    "message": "প্রোফাইল"
+  },
+  "profile": {
+    "message": "প্রোফাইল"
+  },
+  "noProfile": {
+    "message": "কোনো প্রোফাইল নেই"
+  },
+  "profileName": {
+    "message": "প্রোফাইলের নাম"
+  },
+  "profileNamePlaceholder": {
+    "message": "কাজ"
+  },
+  "saveProfile": {
+    "message": "নতুন প্রোফাইল হিসেবে সংরক্ষণ করুন"
+  },
+  "renameProfile": {
+    "message": "নাম পরিবর্তন করুন"
+  },
+  "deleteProfile": {
+    "message": "মুছুন"
+  },
+  "profilesHint": {
+    "message": "একটি প্রোফাইল উপরের বিষয়গুলো আর দুটি স্লাইডার, \"দেখানোর জন্য দরকারি মিল\" ও \"যে মিলে লুকায়\", একটি নামে সংরক্ষণ করে। এখানে বা টুলবারে এক্সটেনশনের পপআপ থেকে প্রোফাইল বদলান। \"কোনো প্রোফাইল নেই\" থেকে কোনো প্রোফাইলে গেলে বিষয়গুলো আর স্লাইডারগুলো বদলে যায়, তাই সেগুলো রাখতে আগে প্রোফাইল হিসেবে সংরক্ষণ করুন।"
+  },
+  "profileNameTaken": {
+    "message": "এই নামে একটি প্রোফাইল আগে থেকেই আছে।"
+  },
+  "profilesFull": {
+    "message": "আর কোনো প্রোফাইলের জায়গা নেই। একটি মুছুন, বা অন্যগুলোর বিষয় ছোট করুন।"
+  },
+  "profileChangeTooLarge": {
+    "message": "এই পরিবর্তন এখন প্রযোজ্য, কিন্তু প্রোফাইলে আঁটছে না, তাই প্রোফাইলটি আগে যা ছিল তা-ই রাখছে। বিষয়গুলো ছোট করুন, বা অন্য একটি প্রোফাইল মুছুন।"
   }
 }

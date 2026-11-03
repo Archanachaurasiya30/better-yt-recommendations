@@ -28,7 +28,13 @@ tests, which must cover at least 80% of the code.
 - Test what the extension does, not how it does it. Tests that only raise coverage
   aren't needed.
 - Keep functions small and follow the style of the code around them.
-- Add new popup text to every `_locales/*/messages.json`.
+- Add new text for the popup, the options page or YouTube pages to every
+  `_locales/*/messages.json`.
+- Give headings and labels their English text in the HTML as well as their
+  `data-i18n` key. The page replaces it with the translation, a test keeps it equal
+  to the English message, and Sonar's HTML checks, which ESLint can't run, need the
+  markup to carry text. The Home and Shorts switches are the exception: they are
+  listed in `FEED_SWITCHES` in `src/ui.js`, which gives each row its `data-i18n` keys.
 - Update the README when a setting or behavior changes.
 
 Pull requests are squash-merged, and the title becomes the commit message on `main`.
@@ -38,10 +44,23 @@ Start it with `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`, `ci:` or
 ## Common changes
 
 **YouTube changed its layout.** The selectors live at the top of `src/content.js`
-(the custom feed tab), `src/sidebar.js` (the recommended videos) and `src/shorts.css`
-(Shorts). Update them, and update the matching markup in the tests.
-`test/fixtures/watch-sidebar.html` is a copy of real YouTube markup; replace it with a
-fresh copy when the sidebar changes.
+(the custom feed tab), `src/cards.js` (the video cards of every filtered list) and
+`src/shorts.css` (Shorts), and `CARD_LINKS` in `src/menus.js` lists the video and channel
+links that get the right-click entries. Update them, and update the matching markup in the
+tests.
+`test/fixtures/watch-sidebar.html`, `test/fixtures/home-grid.html` and
+`test/fixtures/search-results.html` are YouTube's markup for each page; replace the one for a
+page when that page changes. Capture Home and search signed in with a throwaway account that
+has some watch history, then scrub anything personal before committing (see the list in the
+fixture's first comment). The Subscriptions tests reuse the Home fixture with its page subtype
+swapped, because the two grids share the same markup. Until signed-in captures replace them,
+`home-grid.html` is written by hand and `search-results.html` was captured signed out; each
+says so in its first comment.
+
+If Shorts move to another address, update the redirect rule's `regexFilter` in
+`src/rules/shorts-redirect.json`, `SHORT_PATH` in `src/shorts.js` and the `href` selectors in
+`src/shorts.css` together, along with the addresses in `test/shorts-redirect.test.js`,
+`test/shorts.test.js` and `test/cards.test.js`.
 
 **A new language.** Add `_locales/<code>/messages.json` with every key from
 `_locales/en/messages.json`. If YouTube names the custom feed tab differently in that

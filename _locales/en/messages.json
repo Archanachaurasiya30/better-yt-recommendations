@@ -1,15 +1,15 @@
 {
   "extDescription": {
-    "message": "Open YouTube Home on your custom feed and hide off-topic videos next to the one you're watching.",
+    "message": "Open YouTube Home on your custom feed and hide recommendations that don't match your topics.",
     "description": "Extension description shown in the Chrome Web Store and on chrome://extensions."
   },
   "lang": {
     "message": "en",
-    "description": "BCP 47 code of this translation, used as the popup's lang attribute."
+    "description": "BCP 47 code of this translation, used as the lang attribute of the popup, the options page, and the hidden-videos row and messages the extension shows on YouTube."
   },
   "autoOpen": {
     "message": "Open custom feed on Home",
-    "description": "Popup toggle that opens the custom feed tab when YouTube Home opens."
+    "description": "Toggle in the popup and on the options page that opens the custom feed tab when YouTube Home opens."
   },
   "autoOpenHint": {
     "message": "Switches to your custom feed whenever you open YouTube Home.",
@@ -17,7 +17,7 @@
   },
   "enforce": {
     "message": "Enforcement mode",
-    "description": "Popup toggle name for enforcement mode."
+    "description": "Toggle name for enforcement mode, in the popup and on the options page."
   },
   "enforceHint": {
     "message": "Stay on your custom feed, even if you pick another Home tab.",
@@ -25,19 +25,23 @@
   },
   "hideShorts": {
     "message": "Hide Shorts",
-    "description": "Popup toggle that hides YouTube Shorts."
+    "description": "Toggle in the popup and on the options page that hides YouTube Shorts."
   },
   "hideShortsHint": {
     "message": "Removes Shorts from feeds, search and the sidebar, and opens Shorts links as regular videos.",
     "description": "Explains the hideShorts toggle: Shorts disappear and Shorts links open in the regular video player."
   },
   "topicFilter": {
-    "message": "Filter recommendations by topic",
-    "description": "Popup toggle that hides recommended videos that don't match the user's topics."
+    "message": "Filter recommendations",
+    "description": "Switch that hides videos by topic and by channel lists."
   },
   "topicFilterHint": {
-    "message": "Hides videos next to the one you're watching that don't match your topics. Uses an AI model on your computer.",
-    "description": "Explains the topicFilter toggle."
+    "message": "Hides videos that don't match your topics, match topics to avoid, or come from channels you always hide, on the pages checked under Where to filter in All settings. Uses an AI model on your computer.",
+    "description": "Explains the Filter recommendations switch in the popup. \"Where to filter\" is the options section's heading (filterPages) and \"All settings\" the link to the options page (allSettings); use the same words. \"Topics to avoid\" and \"channels you always hide\" should match the avoidTopics and blockedChannels labels."
+  },
+  "topicFilterHintHere": {
+    "message": "Hides videos that don't match your topics, match topics to avoid, or come from channels you always hide, on the pages checked under Where to filter below. Uses an AI model on your computer.",
+    "description": "Explains the Filter recommendations switch on the options page, where the Where to filter section (filterPages) comes further down; use the same words as its heading. \"Topics to avoid\" and \"channels you always hide\" should match the avoidTopics and blockedChannels labels."
   },
   "topics": {
     "message": "Topics you want to see",
@@ -51,17 +55,21 @@
     "message": "Separate topics with commas.",
     "description": "Explains how to type several topics."
   },
-  "sensitivity": {
-    "message": "Filter sensitivity",
-    "description": "Label of the slider that sets how close to a topic a video must be to stay visible."
+  "threshold": {
+    "message": "Match needed to show",
+    "description": "Label of the slider that sets how well a video must match one of the topics the user wants to see to stay visible. Its value, from 0.10 to 0.40, shows next to it."
   },
-  "sensitivityHint": {
-    "message": "Higher hides more videos; lower keeps more.",
-    "description": "Explains which way to move the sensitivity slider."
+  "thresholdHint": {
+    "message": "A video must match one of your topics at least this much to stay. Higher hides more.",
+    "description": "Explains the threshold slider (\"Match needed to show\")."
+  },
+  "thresholdHintEmpty": {
+    "message": "Has no effect until you add a topic you want to see.",
+    "description": "Replaces the threshold slider's hint while there are no topics to see, since the slider then changes nothing."
   },
   "modelIdle": {
-    "message": "The model loads when you open a video.",
-    "description": "Status of the topic model before it has loaded."
+    "message": "The model loads when a page needs it, or when you click Load now.",
+    "description": "Status of the topic model before it has loaded. \"Load now\" is the button next to it."
   },
   "modelLoading": {
     "message": "Loading the model…",
@@ -77,6 +85,410 @@
   },
   "sourceCode": {
     "message": "Source code on GitHub",
-    "description": "Link at the bottom of the popup that opens the extension's source code on GitHub."
+    "description": "Link at the bottom of the popup and the options page that opens the extension's source code on GitHub."
+  },
+  "allSettings": {
+    "message": "All settings",
+    "description": "Popup link and gear button that open the options page with every setting."
+  },
+  "homeSection": {
+    "message": "Home and Shorts",
+    "description": "Heading of the options page section with the switches for YouTube Home (autoOpen, enforce) and Hide Shorts (hideShorts). \"Home\" is YouTube's Home page and \"Shorts\" YouTube's name for short videos; use the same words as those switches."
+  },
+  "topicsSection": {
+    "message": "Topics",
+    "description": "Heading of the options page section with the Filter recommendations switch (topicFilter), the topics, their sliders and the try box."
+  },
+  "summaryTopics": {
+    "message": "Topics: $TOPICS$",
+    "description": "Popup line listing the topics the filter keeps.",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "chess, cooking"
+      }
+    }
+  },
+  "noTopicsYet": {
+    "message": "No topics yet. Add some in All settings.",
+    "description": "Popup line shown when no topics are set. \"All settings\" is the name of the link below it."
+  },
+  "avoidTopics": {
+    "message": "Topics to avoid",
+    "description": "Label of the field where the user types topics whose videos should be hidden."
+  },
+  "avoidTopicsPlaceholder": {
+    "message": "gaming, celebrity gossip",
+    "description": "Example topics to avoid in the empty field. Use topics that make sense in this language, separated by commas."
+  },
+  "avoidTopicsHint": {
+    "message": "Videos that match one of these more than your topics are hidden. Separate topics with commas.",
+    "description": "Explains the topics-to-avoid field: a video is hidden for these only when it matches one of them more than the wanted topics."
+  },
+  "avoidThreshold": {
+    "message": "Match that hides",
+    "description": "Label of the slider that sets how well a video must match a topic to avoid to be hidden. Its value, from 0.10 to 0.40, shows next to it."
+  },
+  "avoidThresholdHint": {
+    "message": "A video is hidden for a topic to avoid only if it matches it this much or more, and more than your topics. Lower hides more.",
+    "description": "Explains the avoidThreshold slider (\"Match that hides\"): a video is hidden for a topic to avoid only when it matches it at least this much and more than the wanted topics."
+  },
+  "avoidThresholdHintEmpty": {
+    "message": "Has no effect until you add a topic to avoid.",
+    "description": "Replaces the avoidThreshold slider's hint while there are no topics to avoid, since the slider then changes nothing."
+  },
+  "summaryAvoiding": {
+    "message": "Avoiding: $TOPICS$",
+    "description": "Popup line listing the topics to avoid.",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "gaming, gossip"
+      }
+    }
+  },
+  "loadNow": {
+    "message": "Load now",
+    "description": "Button next to the model status that starts loading the topic model right away."
+  },
+  "tryTitle": {
+    "message": "Try a title",
+    "description": "Label of the box where the user types a video title to test the filter."
+  },
+  "tryTitlePlaceholder": {
+    "message": "How to beat the Sicilian Defense",
+    "description": "Example video title in the empty box. Use a title that makes sense in this language."
+  },
+  "tryTitleHint": {
+    "message": "Type a video title to see whether the filter would show or hide it with the settings above.",
+    "description": "Explains the try-a-title box."
+  },
+  "tryScores": {
+    "message": "Match with your topics: $WANT$ · Match with topics to avoid: $AVOID$",
+    "description": "Shows how well the typed title matches each list of topics, on the sliders' scale (the highest similarity, from -1 to 1). Use the words of the sliders' labels (threshold and avoidThreshold).",
+    "placeholders": {
+      "want": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "avoid": {
+        "content": "$2",
+        "example": "none"
+      }
+    }
+  },
+  "tryScoreNone": {
+    "message": "none",
+    "description": "Shown instead of a number when that list of topics is empty."
+  },
+  "tryShown": {
+    "message": "Shown",
+    "description": "Read out by screen readers when the try box's verdict says the filter would keep the typed title visible, such as when moving a slider makes it shown. The verdict on screen (tryOnTopic, tryNotAvoided or tryAvoidedNotMore) says why."
+  },
+  "tryHidden": {
+    "message": "Hidden",
+    "description": "Read out by screen readers when the try box's verdict says the filter would hide the typed title, such as when moving a slider makes it hidden. The verdict on screen (tryAvoided, tryAvoidedMore or tryOffTopic) says why."
+  },
+  "tryAvoided": {
+    "message": "Hidden: matches a topic to avoid at $SCORE$, reaching the $LINE$ that hides.",
+    "description": "Verdict in the try box with only topics to avoid: the title would be hidden because it matches them at least as well as the avoidThreshold slider (\"Match that hides\") is set. Use the words of that slider's label.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryAvoidedMore": {
+    "message": "Hidden: matches a topic to avoid at $AVOID$, more than your topics at $WANT$.",
+    "description": "Verdict in the try box with both lists: the title would be hidden because it reaches the avoidThreshold slider (\"Match that hides\") and matches a topic to avoid more than the wanted topics. The first number is the match with the topics to avoid, the second with the wanted topics.",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryAvoidedNotMore": {
+    "message": "Shown: matches a topic to avoid at $AVOID$, but not more than your topics at $WANT$.",
+    "description": "Verdict in the try box with both lists: the title would be shown because, though it reaches the avoidThreshold slider (\"Match that hides\"), it matches a topic to avoid no more than the wanted topics, which it matches as the threshold slider asks. The first number is the match with the topics to avoid, the second with the wanted topics.",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryOffTopic": {
+    "message": "Hidden: matches your topics at only $SCORE$, below the $LINE$ needed.",
+    "description": "Verdict in the try box: the title would be hidden because it matches the wanted topics less than the threshold slider (\"Match needed to show\") asks. Use the words of that slider's label.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryOnTopic": {
+    "message": "Shown: matches your topics at $SCORE$, meeting the $LINE$ needed.",
+    "description": "Verdict in the try box: the title would be shown because it matches the wanted topics at least as well as the threshold slider (\"Match needed to show\") asks. Use the words of that slider's label.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNotAvoided": {
+    "message": "Shown: matches a topic to avoid at only $SCORE$, below the $LINE$ that hides.",
+    "description": "Verdict in the try box with only topics to avoid: the title would be shown because it matches them less than the avoidThreshold slider (\"Match that hides\") is set. Use the words of that slider's label.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNeedsTopics": {
+    "message": "Add a topic above to try a title.",
+    "description": "Shown in the try box when no topics are set."
+  },
+  "tryError": {
+    "message": "Couldn't check the title. Try again shortly.",
+    "description": "Shown in the try box when the model failed to answer."
+  },
+  "hiddenRowOne": {
+    "message": "1 video hidden",
+    "description": "Shown above a YouTube list when the filter hid exactly one video."
+  },
+  "hiddenRowMany": {
+    "message": "$COUNT$ videos hidden",
+    "description": "Shown above a YouTube list for any other number of hidden videos. If your language has several plural forms, use a wording that is correct for every number, such as \"Videos hidden: $COUNT$\".",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "showHidden": {
+    "message": "Show them",
+    "description": "Button that reveals the hidden videos on the current page."
+  },
+  "hideHidden": {
+    "message": "Hide them again",
+    "description": "Button that hides the revealed videos again."
+  },
+  "filterPages": {
+    "message": "Where to filter",
+    "description": "Heading of the options section with the pages the filter works on."
+  },
+  "filterPagesHint": {
+    "message": "Each filtered list starts with a row that says how many videos are hidden and can show them.",
+    "description": "Explains the Where to filter section."
+  },
+  "filterWatch": {
+    "message": "Next to the video you're watching",
+    "description": "Checkbox: filter the recommendations beside or below the video being watched."
+  },
+  "filterHome": {
+    "message": "Home",
+    "description": "Checkbox: filter the YouTube Home page."
+  },
+  "filterSubscriptions": {
+    "message": "Subscriptions",
+    "description": "Checkbox: filter the Subscriptions feed."
+  },
+  "filterSearch": {
+    "message": "Search results",
+    "description": "Checkbox: filter search results."
+  },
+  "channels": {
+    "message": "Channels",
+    "description": "Heading of the options section with the channel lists."
+  },
+  "allowedChannels": {
+    "message": "Never hide these channels",
+    "description": "Label of the list of channels whose videos always stay visible."
+  },
+  "allowedChannelsHint": {
+    "message": "Videos from these channels stay visible, whatever their topic.",
+    "description": "Explains the never-hide list."
+  },
+  "blockedChannels": {
+    "message": "Always hide these channels",
+    "description": "Label of the list of channels whose videos are always hidden."
+  },
+  "blockedChannelsHint": {
+    "message": "Videos from these channels are hidden on every page checked under Where to filter.",
+    "description": "Explains the always-hide list. \"Where to filter\" is the section above (filterPages); use the same words."
+  },
+  "channelsHint": {
+    "message": "One channel per line, as its name appears on YouTube.",
+    "description": "Explains how to type the channel lists."
+  },
+  "listFull": {
+    "message": "A list holds up to 50 channels. Only the first 50 are saved.",
+    "description": "Shown when a channel list has more than 50 names."
+  },
+  "saveFailed": {
+    "message": "Couldn't save your change. Try again in a minute.",
+    "description": "Shown when Chrome refused to save a setting."
+  },
+  "menuAllowChannel": {
+    "message": "Never hide this channel",
+    "description": "Right-click menu entry on a YouTube video that adds its channel to the never-hide list."
+  },
+  "menuBlockChannel": {
+    "message": "Always hide this channel",
+    "description": "Right-click menu entry on a YouTube video that adds its channel to the always-hide list."
+  },
+  "channelAllowed": {
+    "message": "$CHANNEL$ will never be hidden.",
+    "description": "Message shown on YouTube after the user picked Never hide this channel.",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "channelBlocked": {
+    "message": "$CHANNEL$ will always be hidden.",
+    "description": "Message shown on YouTube after the user picked Always hide this channel.",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "noChannelPicked": {
+    "message": "Right-click a video's thumbnail or title to pick its channel.",
+    "description": "Message shown when the right-click wasn't on a video."
+  },
+  "channelListFull": {
+    "message": "That list is full. Remove a channel in All settings first.",
+    "description": "Message shown when a channel list can't take another name."
+  },
+  "channelSavedNotFiltered": {
+    "message": "It applies where Filter recommendations is on and the page is checked under Where to filter.",
+    "description": "Second sentence after \"… will always be hidden.\" when nothing is hidden right now, because the filter is off or this page isn't checked."
+  },
+  "channelsMenuHint": {
+    "message": "You can also right-click a video's thumbnail or title on YouTube to add its channel.",
+    "description": "Hint under the channel lists on the options page."
+  },
+  "commandToggleFilter": {
+    "message": "Turn Filter recommendations on or off",
+    "description": "Keyboard shortcut description shown on chrome://extensions/shortcuts and on the options page."
+  },
+  "commandToggleShorts": {
+    "message": "Turn Hide Shorts on or off",
+    "description": "Keyboard shortcut description shown on chrome://extensions/shortcuts and on the options page."
+  },
+  "topicFilterOn": {
+    "message": "Filter recommendations is on",
+    "description": "Message shown on YouTube after the shortcut turned the filter on."
+  },
+  "topicFilterOff": {
+    "message": "Filter recommendations is off",
+    "description": "Message shown on YouTube after the shortcut turned the filter off."
+  },
+  "hideShortsOn": {
+    "message": "Hide Shorts is on",
+    "description": "Message shown on YouTube after the shortcut turned Hide Shorts on."
+  },
+  "hideShortsOff": {
+    "message": "Hide Shorts is off",
+    "description": "Message shown on YouTube after the shortcut turned Hide Shorts off."
+  },
+  "shortcuts": {
+    "message": "Keyboard shortcuts",
+    "description": "Heading of the options section that lists the shortcuts."
+  },
+  "shortcutsHint": {
+    "message": "Chrome leaves a shortcut unset when another extension already uses it.",
+    "description": "Explains why a shortcut can show Not set."
+  },
+  "shortcutUnset": {
+    "message": "Not set",
+    "description": "Shown instead of a key combination when a shortcut has none."
+  },
+  "changeShortcuts": {
+    "message": "Change shortcuts",
+    "description": "Button that opens Chrome's keyboard shortcuts page."
+  },
+  "profilesSection": {
+    "message": "Profiles",
+    "description": "Heading of the options section that manages topic profiles."
+  },
+  "profile": {
+    "message": "Profile",
+    "description": "Label of the profile switch, in the popup and in the options page's Profiles section."
+  },
+  "noProfile": {
+    "message": "No profile",
+    "description": "First choice of the profile switch: the topics and sliders aren't tied to a profile."
+  },
+  "profileName": {
+    "message": "Profile name",
+    "description": "Label of the field where the user names a profile."
+  },
+  "profileNamePlaceholder": {
+    "message": "Work",
+    "description": "Example profile name. Use a short word that makes sense in this language."
+  },
+  "saveProfile": {
+    "message": "Save as new profile",
+    "description": "Button that saves the current topics and both sliders under the typed name."
+  },
+  "renameProfile": {
+    "message": "Rename",
+    "description": "Button that gives the selected profile the typed name."
+  },
+  "deleteProfile": {
+    "message": "Delete",
+    "description": "Button that deletes the selected profile. The topics and sliders stay as they are."
+  },
+  "profilesHint": {
+    "message": "A profile saves the topics above and both sliders, Match needed to show and Match that hides, under a name. Switch profiles here or from the toolbar popup. Switching from No profile replaces the topics and sliders, so save them as a profile first to keep them.",
+    "description": "Hint under the Profiles section on the options page. \"Match needed to show\" and \"Match that hides\" are the two sliders' labels (threshold, avoidThreshold), and \"No profile\" is the first choice of the profile switch (noProfile); use the same words. \"Toolbar popup\" is the extension's popup."
+  },
+  "profileNameTaken": {
+    "message": "A profile with that name already exists.",
+    "description": "Shown when the typed profile name is already used."
+  },
+  "profilesFull": {
+    "message": "No room for another profile. Delete one, or shorten the topics of the others.",
+    "description": "Shown when Chrome sync can't hold another profile, or a renamed one."
+  },
+  "profileChangeTooLarge": {
+    "message": "This change applies now, but it doesn't fit in the profile, which keeps what it had. Shorten the topics, or delete another profile.",
+    "description": "Shown under the topics and sliders when Chrome sync can't hold the selected profile with new topics or a new slider value. The filter uses the new value, and the profile keeps its older one."
   }
 }

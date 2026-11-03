@@ -1,6 +1,6 @@
 {
   "extDescription": {
-    "message": "يفتح خلاصتك المخصّصة في الصفحة الرئيسية على YouTube ويخفي الفيديوهات غير المتعلقة بموضوعاتك بجانب الفيديو الذي تشاهده."
+    "message": "يفتح خلاصتك المخصّصة في الصفحة الرئيسية على YouTube ويخفي المقترحات التي لا تطابق موضوعاتك."
   },
   "lang": {
     "message": "ar"
@@ -24,10 +24,13 @@
     "message": "يزيل Shorts من الخلاصات والبحث والشريط الجانبي، ويفتح روابط Shorts كفيديوهات عادية."
   },
   "topicFilter": {
-    "message": "تصفية المقترحات حسب الموضوع"
+    "message": "تصفية المقترحات"
   },
   "topicFilterHint": {
-    "message": "يخفي الفيديوهات المعروضة بجانب الفيديو الذي تشاهده إذا لم تطابق موضوعاتك. يستخدم نموذج ذكاء اصطناعي على جهازك."
+    "message": "يخفي الفيديوهات التي لا تطابق موضوعاتك، أو تطابق الموضوعات التي تريد تجنّبها، أو تأتي من قنوات تخفيها دائمًا، في الصفحات المحددة ضمن «أين تتم التصفية» في كل الإعدادات. يستخدم نموذج ذكاء اصطناعي على جهازك."
+  },
+  "topicFilterHintHere": {
+    "message": "يخفي الفيديوهات التي لا تطابق موضوعاتك، أو تطابق الموضوعات التي تريد تجنّبها، أو تأتي من قنوات تخفيها دائمًا، في الصفحات المحددة ضمن «أين تتم التصفية» أدناه. يستخدم نموذج ذكاء اصطناعي على جهازك."
   },
   "topics": {
     "message": "الموضوعات التي تريد مشاهدتها"
@@ -38,14 +41,17 @@
   "topicsHint": {
     "message": "افصل بين الموضوعات بفواصل."
   },
-  "sensitivity": {
-    "message": "حساسية التصفية"
+  "threshold": {
+    "message": "التطابق اللازم للعرض"
   },
-  "sensitivityHint": {
-    "message": "القيمة الأعلى تخفي فيديوهات أكثر، والأقل تُبقي فيديوهات أكثر."
+  "thresholdHint": {
+    "message": "أقل قدر من التطابق مع أحد موضوعاتك يحتاجه الفيديو ليبقى ظاهرًا. القيمة الأعلى تخفي أكثر."
+  },
+  "thresholdHintEmpty": {
+    "message": "لا أثر له حتى تضيف موضوعًا تريد مشاهدته."
   },
   "modelIdle": {
-    "message": "يُحمَّل النموذج عند فتح فيديو."
+    "message": "يُحمَّل النموذج عندما تحتاجه صفحة، أو عند النقر على «حمّل الآن»."
   },
   "modelLoading": {
     "message": "جارٍ تحميل النموذج…"
@@ -58,5 +64,333 @@
   },
   "sourceCode": {
     "message": "الشيفرة المصدرية على GitHub"
+  },
+  "allSettings": {
+    "message": "كل الإعدادات"
+  },
+  "homeSection": {
+    "message": "الصفحة الرئيسية وShorts"
+  },
+  "topicsSection": {
+    "message": "الموضوعات"
+  },
+  "summaryTopics": {
+    "message": "الموضوعات: $TOPICS$",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "chess, cooking"
+      }
+    }
+  },
+  "noTopicsYet": {
+    "message": "لا توجد موضوعات بعد. أضِف بعضها في «كل الإعدادات»."
+  },
+  "avoidTopics": {
+    "message": "الموضوعات التي تريد تجنّبها"
+  },
+  "avoidTopicsPlaceholder": {
+    "message": "الألعاب، أخبار المشاهير"
+  },
+  "avoidTopicsHint": {
+    "message": "تُخفى الفيديوهات التي تتطابق مع أحد هذه الموضوعات أكثر مما تتطابق مع موضوعاتك. افصل بين الموضوعات بفواصل."
+  },
+  "avoidThreshold": {
+    "message": "التطابق الذي يُخفي"
+  },
+  "avoidThresholdHint": {
+    "message": "لا يُخفى فيديو بسبب موضوع تتجنّبه إلا إذا تطابق معه بهذا القدر أو أكثر، وأكثر مما يتطابق مع موضوعاتك. القيمة الأقل تخفي أكثر."
+  },
+  "avoidThresholdHintEmpty": {
+    "message": "لا أثر له حتى تضيف موضوعًا تريد تجنّبه."
+  },
+  "summaryAvoiding": {
+    "message": "تجنُّب: $TOPICS$",
+    "placeholders": {
+      "topics": {
+        "content": "$1",
+        "example": "gaming, gossip"
+      }
+    }
+  },
+  "loadNow": {
+    "message": "حمّل الآن"
+  },
+  "tryTitle": {
+    "message": "جرّب عنوانًا"
+  },
+  "tryTitlePlaceholder": {
+    "message": "كيف تتغلب على الدفاع الصقلي"
+  },
+  "tryTitleHint": {
+    "message": "اكتب عنوان فيديو لترى هل ستعرضه التصفية أم تخفيه بالإعدادات أعلاه."
+  },
+  "tryScores": {
+    "message": "التطابق مع موضوعاتك: $WANT$ · التطابق مع الموضوعات التي تتجنّبها: $AVOID$",
+    "placeholders": {
+      "want": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "avoid": {
+        "content": "$2",
+        "example": "none"
+      }
+    }
+  },
+  "tryScoreNone": {
+    "message": "لا يوجد"
+  },
+  "tryShown": {
+    "message": "ظاهر"
+  },
+  "tryHidden": {
+    "message": "مخفي"
+  },
+  "tryAvoided": {
+    "message": "مخفي: يتطابق مع موضوع تتجنّبه بقدر $SCORE$، وهذا يبلغ $LINE$ التي تُخفي.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryAvoidedMore": {
+    "message": "مخفي: يتطابق مع موضوع تتجنّبه بقدر $AVOID$، أكثر من تطابقه مع موضوعاتك بقدر $WANT$.",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryAvoidedNotMore": {
+    "message": "ظاهر: يتطابق مع موضوع تتجنّبه بقدر $AVOID$، لكن ليس أكثر من تطابقه مع موضوعاتك بقدر $WANT$.",
+    "placeholders": {
+      "avoid": {
+        "content": "$1",
+        "example": "0.39"
+      },
+      "want": {
+        "content": "$2",
+        "example": "0.31"
+      }
+    }
+  },
+  "tryOffTopic": {
+    "message": "مخفي: يتطابق مع موضوعاتك بقدر $SCORE$ فقط، أقل من $LINE$ اللازمة.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryOnTopic": {
+    "message": "ظاهر: يتطابق مع موضوعاتك بقدر $SCORE$، وهذا يبلغ $LINE$ اللازمة.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.31"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNotAvoided": {
+    "message": "ظاهر: يتطابق مع موضوع تتجنّبه بقدر $SCORE$ فقط، أقل من $LINE$ التي تُخفي.",
+    "placeholders": {
+      "score": {
+        "content": "$1",
+        "example": "0.18"
+      },
+      "line": {
+        "content": "$2",
+        "example": "0.25"
+      }
+    }
+  },
+  "tryNeedsTopics": {
+    "message": "أضف موضوعًا أعلاه لتجربة عنوان."
+  },
+  "tryError": {
+    "message": "تعذّر فحص العنوان. حاول مجددًا بعد قليل."
+  },
+  "hiddenRowOne": {
+    "message": "تم إخفاء فيديو واحد"
+  },
+  "hiddenRowMany": {
+    "message": "الفيديوهات المخفية: $COUNT$",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "showHidden": {
+    "message": "إظهارها"
+  },
+  "hideHidden": {
+    "message": "إخفاؤها مجددًا"
+  },
+  "filterPages": {
+    "message": "أين تتم التصفية"
+  },
+  "filterPagesHint": {
+    "message": "تبدأ كل قائمة تتم تصفيتها بصف يوضح عدد الفيديوهات المخفية ويتيح عرضها."
+  },
+  "filterWatch": {
+    "message": "بجانب الفيديو الذي تشاهده"
+  },
+  "filterHome": {
+    "message": "الصفحة الرئيسية"
+  },
+  "filterSubscriptions": {
+    "message": "الاشتراكات"
+  },
+  "filterSearch": {
+    "message": "نتائج البحث"
+  },
+  "channels": {
+    "message": "القنوات"
+  },
+  "allowedChannels": {
+    "message": "لا تُخفِ هذه القنوات أبدًا"
+  },
+  "allowedChannelsHint": {
+    "message": "تبقى فيديوهات هذه القنوات ظاهرة، أيًّا كان موضوعها."
+  },
+  "blockedChannels": {
+    "message": "أخفِ هذه القنوات دائمًا"
+  },
+  "blockedChannelsHint": {
+    "message": "تُخفى فيديوهات هذه القنوات في كل الصفحات المحددة ضمن «أين تتم التصفية»."
+  },
+  "channelsHint": {
+    "message": "قناة واحدة في كل سطر، باسمها كما يظهر على YouTube."
+  },
+  "listFull": {
+    "message": "تتسع القائمة لـ ٥٠ قناة كحد أقصى. لا يُحفظ إلا أول ٥٠ قناة."
+  },
+  "saveFailed": {
+    "message": "تعذّر حفظ التغيير. حاول مجددًا بعد دقيقة."
+  },
+  "menuAllowChannel": {
+    "message": "لا تُخفِ هذه القناة أبدًا"
+  },
+  "menuBlockChannel": {
+    "message": "أخفِ هذه القناة دائمًا"
+  },
+  "channelAllowed": {
+    "message": "لن تُخفى القناة $CHANNEL$ أبدًا.",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "channelBlocked": {
+    "message": "ستُخفى القناة $CHANNEL$ دائمًا.",
+    "placeholders": {
+      "channel": {
+        "content": "$1",
+        "example": "freeCodeCamp.org"
+      }
+    }
+  },
+  "noChannelPicked": {
+    "message": "انقر بزر الماوس الأيمن على الصورة المصغّرة لفيديو أو على عنوانه لاختيار قناته."
+  },
+  "channelListFull": {
+    "message": "هذه القائمة ممتلئة. أزِل منها قناة في «كل الإعدادات» أولًا."
+  },
+  "channelSavedNotFiltered": {
+    "message": "يسري ذلك حيث يكون «تصفية المقترحات» مفعّلًا وتكون الصفحة محددة ضمن «أين تتم التصفية»."
+  },
+  "channelsMenuHint": {
+    "message": "يمكنك أيضًا النقر بزر الماوس الأيمن على الصورة المصغّرة لفيديو أو على عنوانه في YouTube لإضافة قناته."
+  },
+  "commandToggleFilter": {
+    "message": "تفعيل «تصفية المقترحات» أو إيقافه"
+  },
+  "commandToggleShorts": {
+    "message": "تفعيل «إخفاء Shorts» أو إيقافه"
+  },
+  "topicFilterOn": {
+    "message": "«تصفية المقترحات» مفعّل"
+  },
+  "topicFilterOff": {
+    "message": "«تصفية المقترحات» متوقف"
+  },
+  "hideShortsOn": {
+    "message": "«إخفاء Shorts» مفعّل"
+  },
+  "hideShortsOff": {
+    "message": "«إخفاء Shorts» متوقف"
+  },
+  "shortcuts": {
+    "message": "اختصارات لوحة المفاتيح"
+  },
+  "shortcutsHint": {
+    "message": "يترك Chrome الاختصار بلا تعيين عندما تستخدمه إضافة أخرى بالفعل."
+  },
+  "shortcutUnset": {
+    "message": "غير معيّن"
+  },
+  "changeShortcuts": {
+    "message": "تغيير الاختصارات"
+  },
+  "profilesSection": {
+    "message": "الملفات الشخصية"
+  },
+  "profile": {
+    "message": "الملف الشخصي"
+  },
+  "noProfile": {
+    "message": "بلا ملف شخصي"
+  },
+  "profileName": {
+    "message": "اسم الملف الشخصي"
+  },
+  "profileNamePlaceholder": {
+    "message": "العمل"
+  },
+  "saveProfile": {
+    "message": "حفظ كملف شخصي جديد"
+  },
+  "renameProfile": {
+    "message": "إعادة التسمية"
+  },
+  "deleteProfile": {
+    "message": "حذف"
+  },
+  "profilesHint": {
+    "message": "يحفظ الملف الشخصي الموضوعات أعلاه وشريطَي التمرير «التطابق اللازم للعرض» و«التطابق الذي يُخفي» باسم. بدّل بين الملفات الشخصية هنا أو من النافذة المنبثقة للإضافة في شريط الأدوات. التبديل من «بلا ملف شخصي» إلى ملف شخصي يستبدل الموضوعات وشريطَي التمرير، لذا احفظها أولًا كملف شخصي للاحتفاظ بها."
+  },
+  "profileNameTaken": {
+    "message": "يوجد ملف شخصي بهذا الاسم بالفعل."
+  },
+  "profilesFull": {
+    "message": "لا توجد مساحة لملف شخصي آخر. احذف ملفًا، أو اختصر موضوعات الملفات الأخرى."
+  },
+  "profileChangeTooLarge": {
+    "message": "يُطبَّق هذا التغيير الآن، لكنه لا يتسع في الملف الشخصي، فيحتفظ بما كان فيه. اختصر الموضوعات، أو احذف ملفًا شخصيًا آخر."
   }
 }
